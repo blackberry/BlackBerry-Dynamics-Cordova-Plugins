@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-bbd-sqlite-storage"
+        version="1.0.0">
+        
+    <name>cordova-plugin-bbd-sqlite-storage</name>
+    <description>BlackBerry Dynamics Cordova Sqlite Storage Plugin</description>
+    <license>SEE LICENSE IN LICENSE</license>
+    <keywords>cordova,plugin,sqlite</keywords>
+
+    <info>
+        The SQLite Storage plugin is dependent on Base and Dynamics File plugins, so please make sure Base and File plugins are installed correctly.
+
+        Original Cordova SQLite Storage plugin link: https://github.com/xpbrew/cordova-sqlite-storage
+    </info>
+
+    <dependency id="cordova-plugin-bbd-base" url="../cordova-plugin-bbd-base" version="^3.0.0" />
+    <dependency id="cordova-plugin-bbd-file" url="../cordova-plugin-bbd-file" version="^1.0.0" />
+
+    <js-module src="www/SQLitePlugin.js" name="SQLitePlugin">
+        <clobbers target="window.openDatabase" />
+    </js-module>
+
+    <js-module src="www/SQLiteImport.js" name="sqlite3enc_import">
+      <clobbers target="window.sqlite3enc_import" />
+    </js-module>
+
+    <hook type="after_plugin_install" src="scripts/hooks/afterPluginInstall.js" />
+
+    <!-- iOS -->
+    <!-- Android -->
+</plugin>

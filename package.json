@@ -1,0 +1,35 @@
+{
+  "name": "cordova-plugin-bbd-sqlite-storage",
+  "version": "1.0.0",
+  "description": "BlackBerry Dynamics Cordova Sqlite Storage Plugin",
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://community.blackberry.com",
+  "cordova": {
+    "id": "cordova-plugin-bbd-sqlite-storage",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "name": "cordova-plugin-bbd-sqlite-storage",
+    "version": "1.0.0",
+    "private": true
+  },
+  "keywords": [
+    "sqlite",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "platforms": [
+    "ios",
+    "android"
+  ],
+  "plugins": [],
+  "devDependencies": {},
+  "dependencies": {},
+  "engines": {},
+  "author": "Apache Software Foundation",
+  "contributors": "Volodymyr Taliar <vtaliar@blackberry.com>"
+}
