@@ -1,0 +1,44 @@
+{
+  "name": "cordova-plugin-bbd-file",
+  "version": "1.0.0",
+  "description": "BlackBerry Dynamics Cordova File plugin",
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://community.blackberry.com",
+  "repository": {
+    "name": "cordova-plugin-bbd-file",
+    "version": "1.0.0",
+    "private": true
+  },
+  "platforms": [
+    "ios",
+    "android"
+  ],
+  "cordova": {
+    "id": "cordova-plugin-bbd-file",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "engines": {
+    "cordovaDependencies": {
+      "5.0.0": {
+        "cordova-android": ">=6.3.0"
+      },
+      "7.0.0": {
+        "cordova": ">100"
+      }
+    }
+  },
+  "keywords": [
+    "cordova",
+    "file",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "dependencies": {},
+  "types": "./types/index.d.ts",
+  "author": "Apache Software Foundation",
+  "contributors": "Volodymyr Taliar <vtaliar@blackberry.com>"
+}

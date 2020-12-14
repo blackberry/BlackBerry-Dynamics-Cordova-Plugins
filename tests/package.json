@@ -1,0 +1,16 @@
+{
+  "name": "cordova-plugin-bbd-file-tests",
+  "version": "1.0.0",
+  "description": "",
+  "cordova": {
+    "id": "cordova-plugin-bbd-file-tests",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "license": "SEE LICENSE IN LICENSE"
+}
