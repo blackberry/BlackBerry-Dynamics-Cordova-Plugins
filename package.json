@@ -1,0 +1,38 @@
+{
+  "name": "cordova-plugin-bbd-file-transfer",
+  "version": "1.0.0",
+  "description": "BlackBerry Dynamics Cordova File Transfer Plugin",
+  "types": "./types/index.d.ts",
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://community.blackberry.com",
+  "cordova": {
+    "id": "cordova-plugin-bbd-file-transfer",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "name": "cordova-plugin-bbd-file-transfer",
+    "version": "1.0.0",
+    "private": true
+  },
+  "keywords": [
+    "cordova",
+    "file",
+    "transfer",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "engines": {
+    "cordovaDependencies": {
+      "2.0.0": {
+        "cordova": ">100"
+      }
+    }
+  },
+  "dependencies": {},
+  "author": "Apache Software Foundation",
+  "contributors": "Volodymyr Taliar <vtaliar@blackberry.com>"
+}

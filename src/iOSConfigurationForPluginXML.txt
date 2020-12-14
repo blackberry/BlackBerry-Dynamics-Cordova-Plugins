@@ -1,0 +1,12 @@
+
+  <!-- ios -->
+  <platform name="ios">
+      <config-file target="config.xml" parent="/*">
+          <feature name="BBDFileTransfer">
+              <param name="ios-package" value="CDVFileTransferBD" />
+          </feature>
+      </config-file>
+      <header-file src="src/ios/CDVFileTransferBD.h" />
+      <source-file src="src/ios/CDVFileTransferBD.m" />
+      <framework src="AssetsLibrary.framework" />
+  </platform>
