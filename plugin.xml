@@ -15,8 +15,8 @@
         Original Cordova SQLite Storage plugin link: https://github.com/xpbrew/cordova-sqlite-storage
     </info>
 
-    <dependency id="cordova-plugin-bbd-base" url="../cordova-plugin-bbd-base" version="^3.0.0" />
-    <dependency id="cordova-plugin-bbd-file" url="../cordova-plugin-bbd-file" version="^1.0.0" />
+    <dependency id="cordova-plugin-bbd-file"
+        url="git+https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins#file" version="^1.0.0" />
 
     <js-module src="www/SQLitePlugin.js" name="SQLitePlugin">
         <clobbers target="window.openDatabase" />

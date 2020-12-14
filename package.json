@@ -12,7 +12,7 @@
     ]
   },
   "repository": {
-    "name": "cordova-plugin-bbd-sqlite-storage",
+    "name": "https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/sqlite-storage",
     "version": "1.0.0",
     "private": true
   },
