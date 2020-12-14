@@ -35,8 +35,8 @@
         Original Cordova FileTransfer plugin link: https://github.com/apache/cordova-plugin-file-transfer
     </info>
 
-    <dependency id="cordova-plugin-bbd-base" url="../cordova-plugin-bbd-base" version="^3.0.0" />
-    <dependency id="cordova-plugin-bbd-file" url="../cordova-plugin-bbd-file" version="^1.0.0" />
+    <dependency id="cordova-plugin-bbd-file"
+        url="git+https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins#file" version="^1.0.0" />
 
     <js-module src="www/FileTransferError.js" name="FileTransferError">
         <clobbers target="window.FileTransferError" />
