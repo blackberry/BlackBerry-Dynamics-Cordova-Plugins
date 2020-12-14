@@ -13,7 +13,7 @@
     ]
   },
   "repository": {
-    "name": "cordova-plugin-bbd-file-transfer",
+    "name": "https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/file-transfer",
     "version": "1.0.0",
     "private": true
   },
