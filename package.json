@@ -14,7 +14,7 @@
     "android"
   ],
   "cordova": {
-    "id": "cordova-plugin-bbd-file",
+    "id": "https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/file",
     "platforms": [
       "android",
       "ios"
