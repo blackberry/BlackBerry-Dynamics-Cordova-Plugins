@@ -12,7 +12,7 @@ Installation
 To add this plugin to your application, run the following command in the project directory:
 ```
 $ cd <path/to/package>/BlackBerry_Dynamics_SDK_for_Cordova_<version>/plugins/cordovaApp
-$ cordova plugin add ../cordova-plugin-bbd-file
+$ cordova plugin add git+https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins#file
 ```
 
 ## Supported Platforms
