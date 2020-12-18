@@ -819,13 +819,15 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 {
     self.bytesTransfered += data.length;
     self.bytesExpected = self.bytesTransfered;
-
-    if (self.targetFileHandle) {
-        [self.targetFileHandle writeData:data];
-    } else {
-        [self.responseData appendData:data];
+    @try {
+        if (self.targetFileHandle) {
+            [self.targetFileHandle writeData:data];
+        } else {
+            [self.responseData appendData:data];
+        }
+    } @catch (NSException* exception) {
+        //DEVNOTE: error message is logged by Dynamics
     }
-
     [self updateProgress];
 }
 
