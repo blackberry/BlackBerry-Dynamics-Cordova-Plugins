@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2020 BlackBerry Limited. All Rights Reserved.
+ Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
  Some modifications to the original Cordova FileTransfer plugin
  from https://github.com/apache/cordova-plugin-file-transfer/
  
@@ -24,7 +24,7 @@
 #import <Foundation/Foundation.h>
 #import <Cordova/CDVPlugin.h>
 #import "CDVFileBD.h"
-#import <GD/GDFileHandle.h>
+#import <BlackBerryDynamics/GD/GDFileHandle.h>
 
 enum CDVFileTransferErrorBD {
     FILE_NOT_FOUND_ERR = 1,
