@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 BlackBerry Limited. All Rights Reserved.
+ * Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
  * Some modifications to the original Cordova SQLite Storage plugin
  * from https://github.com/xpbrew/cordova-sqlite-storage/
  *
@@ -12,8 +12,8 @@
 
 #import "SQLitePluginBD.h"
 
-#import <GD/sqlite3enc.h>
-#import <GD/GDFileManager.h>
+#import <BlackBerryDynamics/GD_C/sqlite3enc.h>
+#import <BlackBerryDynamics/GD/GDFileManager.h>
 
 // Defines Macro to only log lines when in DEBUG mode
 #ifdef DEBUG
