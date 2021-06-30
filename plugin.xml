@@ -23,7 +23,7 @@
   under the License.
 -->
 
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-bbd-file-transfer" version="1.0.0">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-bbd-file-transfer" version="1.1.0">
     <name>cordova-plugin-bbd-file-transfer</name>
     <description>BlackBerry Dynamics Cordova File Transfer Plugin</description>
     <license>SEE LICENSE IN LICENSE</license>
@@ -36,7 +36,7 @@
     </info>
 
     <dependency id="cordova-plugin-bbd-file"
-        url="git+https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins#file" version="^1.0.0" />
+        url="git+https://github.com/blackberry/blackberry-dynamics-cordova-plugins#file" version="^1.1.0" />
 
     <js-module src="www/FileTransferError.js" name="FileTransferError">
         <clobbers target="window.FileTransferError" />
