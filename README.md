@@ -3,6 +3,7 @@ This repository contains three Cordova plugins separated into branches:
  - `file` branch corresponds to [cordova-plugin-bbd-file](https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/file) plugin
  - `file-transfer` branch corresponds to [cordova-plugin-bbd-file-transfer](https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/file-transfer) plugin
  - `sqlite-storage` branch corresponds to [cordova-plugin-bbd-sqlite-storage](https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/sqlite-storage) plugin
+ - `inappbrowser` branch corresponds to [cordova-plugin-bbd-inappbrowser](https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/inappbrowser) plugin
 
 > Please visit appropriate branch in order to take a look at implementation of specific plugin.
 
@@ -40,4 +41,16 @@ $ cordova plugin add git+https://github.com/blackberry/BlackBerry-Dynamics-Cordo
 ### Uninstallation
 ```
 $ cordova plugin rm cordova-plugin-bbd-sqlite-storage
+```
+
+## cordova-plugin-bbd-inappbrowser
+`cordova-plugin-bbd-inappbrowser` is a fork of [cordova-plugin-inappbrowser@5.0.0](https://github.com/apache/cordova-plugin-inappbrowser/tree/5.0.x).
+This plugin enables you to securely load helpful articles, videos, and web resources inside of your app without leaving your app.
+### Installation
+```
+$ cordova plugin add git+https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins#inappbrowser
+```
+### Uninstallation
+```
+$ cordova plugin rm cordova-plugin-bbd-inappbrowser
 ```
