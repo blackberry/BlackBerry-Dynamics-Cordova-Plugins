@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2019 BlackBerry Ltd.
+ * Copyright 2020 BlackBerry Limited.
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file

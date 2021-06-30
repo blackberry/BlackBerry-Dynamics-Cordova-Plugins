@@ -215,46 +215,6 @@ public class FileUtils extends GDBasePlugin {
 
             registerExtraFileSystems(getExtraFileSystemsPreference(activity), getAvailableFileSystems(activity));
 
-            // DEVNOTE: temporary solution to migrate user files and directories previously created at "Persistent" FS of old "Storage" plugin
-            // to appropriate location of "File" plugin for backward compatibility
-            try {
-                JSONArray entriesOldPersistent = readEntries("cdvfile://localhost/root/");
-
-                for (int i = 0, size = entriesOldPersistent.length(); i < size; i++) {
-                    JSONObject objectInArray = entriesOldPersistent.getJSONObject(i);
-                    String name = objectInArray.getString("name");
-
-                    // Skip system dirs
-                    if (name.equals("gd_shared_prefs") || name.equals("data") || name.equals("Inbox")) {
-                        continue;
-                    }
-
-                    String fullPath = objectInArray.getString("fullPath");
-                    transferTo("cdvfile://localhost/root/" + fullPath, "cdvfile://localhost/persistent/", "", true);
-                }
-
-                // Move AppKinetics copyFilesToSecureFileSystem files from "data" directory of old "Storage" plugin to "Inbox/data" directory of "File" plugin
-                JSONArray entriesOldAppKineticsData = readEntries("cdvfile://localhost/root/data/");
-
-                if (entriesOldAppKineticsData.length() > 0) {
-                    // DEVNOTE: Create "data" directory to be able to move AppKinetics copyFilesToSecureFileSystem files at "data" directory from old Storage plugin
-                    LocalFilesystem.prepareDirectory(appKineticsRoot + "/data/");
-                }
-
-                for (int i = 0, size = entriesOldAppKineticsData.length(); i < size; i++) {
-                    JSONObject objectInArray = entriesOldAppKineticsData.getJSONObject(i);
-                    Boolean isFile = Boolean.parseBoolean(objectInArray.getString("isFile"));
-
-                    if (isFile) {
-                        String fullPath = objectInArray.getString("fullPath");
-                        transferTo("cdvfile://localhost/root/" + fullPath, "cdvfile://localhost/root/Inbox/data/", "", true);
-                    }
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
             // Initialize static plugin reference for deprecated getEntry method
             if (filePlugin == null) {
                 FileUtils.filePlugin = this;
