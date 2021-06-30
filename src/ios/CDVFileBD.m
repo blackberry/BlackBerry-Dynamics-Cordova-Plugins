@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2020 BlackBerry Limited. All Rights Reserved.
+ Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
  Some modifications to the original Cordova File plugin
  from https://github.com/apache/cordova-plugin-file/
  
@@ -26,8 +26,7 @@
 #import "CDVLocalFilesystemBD.h"
 #import "CDVAssetLibraryFilesystemBD.h"
 #import <objc/message.h>
-#import <GD/GDFileManager.h>
-#import <GD/GDLogManager.h>
+#import <BlackBerryDynamics/GD/GDFileManager.h>
 
 static NSString* toBase64(NSData* data) {
     SEL s1 = NSSelectorFromString(@"cdv_base64EncodedString");
@@ -1149,8 +1148,9 @@ NSString* const kCDVFilesystemURLPrefixBD = @"cdvfile";
 -(void)uploadLogs:(CDVInvokedUrlCommand*)command {
     NSString *callbackId = command.callbackId;
     CDVPluginResult *result = nil;
+    NSError *error = nil;
 
-    if ([[GDLogManager sharedInstance] startUpload]) {
+    if ([GDFileManager uploadLogs:&error]) {
             result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         }
     else {

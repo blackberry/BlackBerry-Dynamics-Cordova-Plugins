@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2020 BlackBerry Limited. All Rights Reserved.
+ Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
  Some modifications to the original Cordova File plugin
  from https://github.com/apache/cordova-plugin-file/
  
@@ -27,8 +27,8 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <sys/xattr.h>
 
-#import <GD/GDFileManager.h>
-#import <GD/GDFileHandle.h>
+#import <BlackBerryDynamics/GD/GDFileManager.h>
+#import <BlackBerryDynamics/GD/GDFileHandle.h>
 
 @implementation CDVLocalFilesystemBD
 @synthesize name=_name, fsRoot=_fsRoot, urlTransformer;

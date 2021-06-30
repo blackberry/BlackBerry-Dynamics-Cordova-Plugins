@@ -26,7 +26,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
            id="cordova-plugin-bbd-file"
-      version="1.0.0">
+      version="1.1.0">
     <name>cordova-plugin-bbd-file</name>
     <description>BlackBerry Dynamics Cordova File plugin</description>
     <license>SEE LICENSE IN LICENSE</license>
