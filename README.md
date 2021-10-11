@@ -4,6 +4,7 @@ This repository contains three Cordova plugins separated into branches:
  - `file-transfer` branch corresponds to [cordova-plugin-bbd-file-transfer](https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/file-transfer) plugin
  - `sqlite-storage` branch corresponds to [cordova-plugin-bbd-sqlite-storage](https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/sqlite-storage) plugin
  - `inappbrowser` branch corresponds to [cordova-plugin-bbd-inappbrowser](https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/inappbrowser) plugin
+ - `media-capture` branch corresponds to [cordova-plugin-bbd-media-capture](https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/media-capture) plugin
 
 > Please visit appropriate branch in order to take a look at implementation of specific plugin.
 
@@ -53,4 +54,16 @@ $ cordova plugin add git+https://github.com/blackberry/BlackBerry-Dynamics-Cordo
 ### Uninstallation
 ```
 $ cordova plugin rm cordova-plugin-bbd-inappbrowser
+```
+
+## cordova-plugin-bbd-media-capture
+`cordova-plugin-bbd-media-capture` is a fork of [of cordova-plugin-media-capture@3.0.4-dev](https://github.com/apache/cordova-plugin-media-capture).
+This plugin enables you to capture audio, video and images using device's microphone or camera and store them within the BlackBerry Dynamics secure container using a similar JavaScript API to the original plugin.
+### Installation
+```
+$ cordova plugin add git+https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins#media-capture
+```
+### Uninstallation
+```
+$ cordova plugin rm cordova-plugin-bbd-media-capture
 ```
