@@ -204,10 +204,10 @@
       this.openDBs[this.dbname] = DB_STATE_INIT;
       step2 = (function(_this) {
         return function() {
-          cordova.exec(opensuccesscb, openerrorcb, "SQLitePlugin", "open", [_this.openargs]);
+          cordova.exec(opensuccesscb, openerrorcb, "BBDSQLitePlugin", "open", [_this.openargs]);
         };
       })(this);
-      cordova.exec(step2, step2, 'SQLitePlugin', 'close', [{
+      cordova.exec(step2, step2, 'BBDSQLitePlugin', 'close', [{
         path: this.dbname
       }]);
     }
@@ -227,7 +227,7 @@
       } else {
         console.log('closing db with no transaction lock state');
       }
-      cordova.exec(success, error, "SQLitePlugin", "close", [{
+      cordova.exec(success, error, "BBDSQLitePlugin", "close", [{
         path: this.dbname
       }]);
     } else {
@@ -462,7 +462,7 @@
         }
       }
     };
-    cordova.exec(mycb, null, "SQLitePlugin", "backgroundExecuteSqlBatch", [{
+    cordova.exec(mycb, null, "BBDSQLitePlugin", "backgroundExecuteSqlBatch", [{
       dbargs: {
         dbname: this.db.dbname
       },
@@ -640,7 +640,7 @@
         args.dblocation = dblocation;
       }
       delete SQLitePlugin.prototype.openDBs[args.path];
-      return cordova.exec(success, error, "SQLitePlugin", "delete", [args]);
+      return cordova.exec(success, error, "BBDSQLitePlugin", "delete", [args]);
     }
   };
 
@@ -908,7 +908,7 @@
       error = function(e) {
         return errorcb(e);
       };
-      return cordova.exec(ok, error, "SQLitePlugin", "echoStringValue", [{
+      return cordova.exec(ok, error, "BBDSQLitePlugin", "echoStringValue", [{
         value: 'test-string'
       }]);
     },

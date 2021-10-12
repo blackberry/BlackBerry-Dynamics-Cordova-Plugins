@@ -72,7 +72,7 @@
             errorCallback(new FileError(code));
         };
 
-        cordovaExec(win, fail, "SQLitePlugin", "sqlite3enc_import", [srcFilename, destFilename]);
+        cordovaExec(win, fail, "BBDSQLitePlugin", "sqlite3enc_import", [srcFilename, destFilename]);
     };
 
     Object.defineProperty(gdSQLite3enc_import, 'toString', {
