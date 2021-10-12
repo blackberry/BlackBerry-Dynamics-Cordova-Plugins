@@ -300,7 +300,7 @@ static CFIndex WriteDataToStream(NSData* data, CFWriteStreamRef stream)
     delegate.source = source;
     delegate.target = server;
     delegate.trustAllHosts = trustAllHosts;
-    delegate.filePlugin = [self.commandDelegate getCommandInstance:@"File"];
+    delegate.filePlugin = [self.commandDelegate getCommandInstance:@"BBDFile"];
     delegate.chunkedMode = chunkedMode;
 
     return delegate;
@@ -339,7 +339,7 @@ static CFIndex WriteDataToStream(NSData* data, CFWriteStreamRef stream)
     if (sourceURL) {
         // Try to get a CDVFileSystem which will handle this file.
         // This requires talking to the current CDVFile plugin.
-        fs = [[self.commandDelegate getCommandInstance:@"File"] filesystemForURL:sourceURL];
+        fs = [[self.commandDelegate getCommandInstance:@"BBDFile"] filesystemForURL:sourceURL];
     }
     if (fs) {
         __weak CDVFileTransferBD* weakSelf = self;
@@ -445,7 +445,7 @@ static CFIndex WriteDataToStream(NSData* data, CFWriteStreamRef stream)
          */
 
         target = [target stringByReplacingOccurrencesOfString:@"//" withString:@"/"];
-        targetURL = [[self.commandDelegate getCommandInstance:@"File"] fileSystemURLforLocalPath:target].url;
+        targetURL = [[self.commandDelegate getCommandInstance:@"BBDFile"] fileSystemURLforLocalPath:target].url;
 
     } else {
         targetURL = [NSURL URLWithString:target];
@@ -492,7 +492,7 @@ static CFIndex WriteDataToStream(NSData* data, CFWriteStreamRef stream)
     delegate.target = [targetURL absoluteString];
     delegate.targetURL = targetURL;
     delegate.trustAllHosts = trustAllHosts;
-    delegate.filePlugin = [self.commandDelegate getCommandInstance:@"File"];
+    delegate.filePlugin = [self.commandDelegate getCommandInstance:@"BBDFile"];
 
     delegate.backgroundTaskID = [[UIApplication sharedApplication]beginBackgroundTaskWithExpirationHandler:^{
         [delegate cancelSessionTask:delegate.sessionTaskConnection];
