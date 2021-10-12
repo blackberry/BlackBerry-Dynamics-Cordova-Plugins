@@ -372,8 +372,27 @@ NSString* const kCDVFilesystemURLPrefixBD = @"cdvfile";
         NSAssert(false,
             @"File plugin configuration error: Please set iosPersistentFileLocation in config.xml to one of \"library\" (for new applications) or \"compatibility\" (for compatibility with previous versions)");
     }
+
     NSString *rootAppkineticsPath = [ self.rootDocsPath stringByAppendingPathComponent:@"Inbox"];
-    [self registerFilesystem:[[CDVLocalFilesystemBD alloc] initWithName:@"appkinetics" root:rootAppkineticsPath]];
+    if ([[GDFileManager defaultManager] createDirectoryAtPath:rootAppkineticsPath
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:&error]) {
+        [self registerFilesystem:[[CDVLocalFilesystemBD alloc] initWithName:@"appkinetics" root:rootAppkineticsPath]];
+    } else {
+        NSLog(@"Unable to create appkinetics directory: %@", error);
+    }
+
+    NSString *rootMediaPath = [ self.rootDocsPath stringByAppendingPathComponent:@"Inbox/media"];
+    if ([[GDFileManager defaultManager] createDirectoryAtPath:rootMediaPath
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:&error]) {
+        [self registerFilesystem:[[CDVLocalFilesystemBD alloc] initWithName:@"media" root:rootMediaPath]];
+    } else {
+        NSLog(@"Unable to create media directory: %@", error);
+    }
+
     [self registerFilesystem:[[CDVAssetLibraryFilesystemBD alloc] initWithName:@"assets-library"]];
 
     [self registerExtraFileSystems:[self getExtraFileSystemsPreference:self.viewController]
@@ -1130,34 +1149,14 @@ NSString* const kCDVFilesystemURLPrefixBD = @"cdvfile";
 }
 
 #pragma mark - GD Logs
--(void)exportLogFileToDocumentsFolder:(CDVInvokedUrlCommand *)command {
+
+- (void)uploadLogs:(CDVInvokedUrlCommand*)command
+{
     NSString *callbackId = command.callbackId;
-    CDVPluginResult *result = nil;
-    NSError *error = nil;
 
-    if ([GDFileManager exportLogFileToDocumentsFolder:&error]) {
-            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-        }
-    else {
-            result = [CDVPluginResult resultWithStatus: CDVCommandStatus_ERROR messageAsInt:INVALID_MODIFICATION_ERR];
-        }
+    [[GDLogManager sharedInstance] openLogUploadUI];
 
-    [self.commandDelegate sendPluginResult:result callbackId:callbackId];
-}
-
--(void)uploadLogs:(CDVInvokedUrlCommand*)command {
-    NSString *callbackId = command.callbackId;
-    CDVPluginResult *result = nil;
-    NSError *error = nil;
-
-    if ([GDFileManager uploadLogs:&error]) {
-            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-        }
-    else {
-            result = [CDVPluginResult resultWithStatus: CDVCommandStatus_ERROR messageAsInt:NOT_FOUND_ERR];
-        }
-
-    [self.commandDelegate sendPluginResult:result callbackId:callbackId];
+    [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:callbackId];
 }
 
 @end

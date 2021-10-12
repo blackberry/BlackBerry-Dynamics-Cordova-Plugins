@@ -1,5 +1,9 @@
 /*
  *
+ * Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+ * Some modifications to the original Cordova File plugin
+ * from https://github.com/apache/cordova-plugin-file/
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -151,7 +155,7 @@ function readSuccessCallback (readType, encoding, offset, totalSize, accumulate,
         exec(
             readSuccessCallback.bind(this, readType, encoding, offset, totalSize, accumulate),
             readFailureCallback.bind(this),
-            'File', readType, execArgs);
+            'BBDFile', readType, execArgs);
     } else {
         this._readyState = FileReader.DONE;
 

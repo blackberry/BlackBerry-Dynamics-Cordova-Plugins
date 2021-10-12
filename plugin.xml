@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  Copyright (c) 2020 BlackBerry Limited. All Rights Reserved.
+  Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
   Some modifications to the original cordova-plugin-file
   from https://github.com/apache/cordova-plugin-file/
 
@@ -26,7 +26,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
            id="cordova-plugin-bbd-file"
-      version="1.1.0">
+      version="1.2.0">
     <name>cordova-plugin-bbd-file</name>
     <description>BlackBerry Dynamics Cordova File plugin</description>
     <license>SEE LICENSE IN LICENSE</license>
@@ -122,7 +122,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="File" >
+            <feature name="BBDFile" >
                 <param name="android-package" value="com.blackberry.bbd.cordova.plugins.file.FileUtils"/>
                 <param name="onload" value="true" />
             </feature>
@@ -164,7 +164,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     <!-- ios -->
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
-            <feature name="File">
+            <feature name="BBDFile">
                 <param name="ios-package" value="CDVFileBD" />
                 <param name="onload" value="true" />
             </feature>
@@ -178,7 +178,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         <source-file src="src/ios/CDVAssetLibraryFilesystemBD.m" />
 
         <!-- ios specific file apis -->
-         <js-module src="www/ios/FileSystem.js" name="iosFileSystem">
+        <js-module src="www/ios/FileSystem.js" name="iosFileSystem">
             <merges target="FileSystem" />
         </js-module>
 
@@ -189,11 +189,12 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         <js-module src="www/fileSystemPaths.js" name="fileSystemPaths">
             <merges target="cordova" />
             <runs/>
-        </js-module> 
+        </js-module>
 
         <framework src="AssetsLibrary.framework" />
         <framework src="MobileCoreServices.framework" />
     </platform>
 
     <hook type="after_plugin_install" src="scripts/hooks/afterPluginInstall.js" />
+    <hook type="after_compile" src="scripts/hooks/afterCompile.js" />
 </plugin>

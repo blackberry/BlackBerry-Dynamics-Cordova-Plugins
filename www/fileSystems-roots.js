@@ -1,6 +1,8 @@
 /*
  *
- * Copyright 2020 BlackBerry Limited.
+ * Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+ * Some modifications to the original Cordova File plugin
+ * from https://github.com/apache/cordova-plugin-file/
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -41,6 +43,6 @@ require('./fileSystems').getFs = function (name, callback) {
     if (fsMap) {
         callback(fsMap[name]);
     } else {
-        exec(success, null, 'File', 'requestAllFileSystems', []);
+        exec(success, null, 'BBDFile', 'requestAllFileSystems', []);
     }
 };

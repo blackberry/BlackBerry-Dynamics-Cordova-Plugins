@@ -1,6 +1,8 @@
 /*
  *
- * Copyright 2020 BlackBerry Limited.
+ * Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+ * Some modifications to the original Cordova File plugin
+ * from https://github.com/apache/cordova-plugin-file/
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -215,7 +217,7 @@ FileWriter.prototype.write = function (data, isPendingBlobReadResult) {
             if (typeof me.onwriteend === 'function') {
                 me.onwriteend(new ProgressEvent('writeend', {'target': me}));
             }
-        }, 'File', 'write', [this.localURL, data, this.position, isBinary]);
+        }, 'BBDFile', 'write', [this.localURL, data, this.position, isBinary]);
 };
 
 /**
@@ -320,7 +322,7 @@ FileWriter.prototype.truncate = function (size) {
             if (typeof me.onwriteend === 'function') {
                 me.onwriteend(new ProgressEvent('writeend', {'target': me}));
             }
-        }, 'File', 'truncate', [this.localURL, size]);
+        }, 'BBDFile', 'truncate', [this.localURL, size]);
 };
 
 module.exports = FileWriter;

@@ -1,5 +1,9 @@
 /*
  *
+ * Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+ * Some modifications to the original Cordova File plugin
+ * from https://github.com/apache/cordova-plugin-file/
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -81,7 +85,7 @@
             }
         };
 
-        exec(success, fail, 'File', 'resolveLocalFileSystemURI', [uri]);
+        exec(success, fail, 'BBDFile', 'resolveLocalFileSystemURI', [uri]);
     };
 
     module.exports.resolveLocalFileSystemURI = function () {

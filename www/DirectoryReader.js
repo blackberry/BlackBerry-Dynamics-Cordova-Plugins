@@ -1,5 +1,9 @@
 /*
  *
+ * Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+ * Some modifications to the original Cordova File plugin
+ * from https://github.com/apache/cordova-plugin-file/
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -66,7 +70,7 @@ DirectoryReader.prototype.readEntries = function (successCallback, errorCallback
     var fail = typeof errorCallback !== 'function' ? null : function (code) {
         errorCallback(new FileError(code));
     };
-    exec(win, fail, 'File', 'readEntries', [this.localURL]);
+    exec(win, fail, 'BBDFile', 'readEntries', [this.localURL]);
 };
 
 module.exports = DirectoryReader;

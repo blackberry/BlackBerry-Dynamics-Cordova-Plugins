@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 BlackBerry Limited. All Rights Reserved.
+ * Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
  * Some modifications to the original Cordova File plugin
  * from https://github.com/apache/cordova-plugin-file/
  *
@@ -43,13 +43,13 @@ exports.file = {
     documentsDirectory: null
 };
 
-channel.waitForInitialization('onFileSystemPathsReady');
+channel.waitForInitialization('onBBDFileSystemPathsReady');
 channel.onCordovaReady.subscribe(function () {
     function after (paths) {
         for (var k in paths) {
             exports.file[k] = paths[k];
         }
-        channel.initializationComplete('onFileSystemPathsReady');
+        channel.initializationComplete('onBBDFileSystemPathsReady');
     }
-    exec(after, null, 'File', 'requestAllPaths', []);
+    exec(after, null, 'BBDFile', 'requestAllPaths', []);
 });
