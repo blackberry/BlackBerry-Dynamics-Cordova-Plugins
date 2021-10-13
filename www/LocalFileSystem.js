@@ -1,6 +1,8 @@
 /*
  *
- * Copyright 2020 BlackBerry Limited.
+ * Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+ * Some modifications to the original Cordova File plugin
+ * from https://github.com/apache/cordova-plugin-file/
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -24,3 +26,4 @@
 exports.TEMPORARY = 0;
 exports.PERSISTENT = 1;
 exports.APPKINETICS = 2;
+exports.MEDIA = 3;

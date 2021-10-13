@@ -1,23 +1,23 @@
 {
   "name": "cordova-plugin-bbd-file",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "BlackBerry Dynamics Cordova File plugin",
   "license": "SEE LICENSE IN LICENSE",
   "homepage": "https://community.blackberry.com",
   "repository": {
     "name": "cordova-plugin-bbd-file",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "private": true,
     "type": "git",
     "url": "https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/file"
   },
-  "bugs": "https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/file/issues",
+  "bugs": "https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/issues",
   "platforms": [
     "ios",
     "android"
   ],
   "cordova": {
-    "id": "https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/file",
+    "id": "cordova-plugin-bbd-file",
     "platforms": [
       "android",
       "ios"

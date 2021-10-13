@@ -64,8 +64,7 @@ resolveLocalFileSystemURL(window.plugins.GDAppKineticsPlugin.storageLocation,
 ## Dynamics logs
 > The BlackBerry Dynamics Cordova File plugin has API to work with Dynamics logs.
 
-- `FileSystem.uploadLogs` API allows to upload BlackBerry Dynamics activity logs for support purposes. The logs will be uploaded to a server in the BlackBerry Technology Network Operation Center (NOC). Upload takes place in background and is retried as necessary.
-- `FileSystem.exportLogFileToDocumentsFolder` API allows to create a dump of BlackBerry Dynamics activity logs. The logs will be dumped to a file that is outside the secure store, in the `Documents` folder. The file will not be encrypted.
+- `FileSystem.uploadLogs` API allows to upload BlackBerry Dynamics activity logs for support purposes. The logs will be uploaded to a server in the BlackBerry Technology Network Operation Center (NOC). This function opens a complete user interface that gives the user an option to start uploading activity log files, then displays progress and a number of management options.
 
 #### Example - uploadLogs
 
@@ -73,16 +72,6 @@ resolveLocalFileSystemURL(window.plugins.GDAppKineticsPlugin.storageLocation,
 requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
     fileSystem.uploadLogs(function() {
         console.log("Logs are uploaded to the NOC");
-    }, null);
-}, null);
-```
-
-#### Example - exportLogFileToDocumentsFolder
-
-```javascript
-requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
-    fileSystem.exportLogFileToDocumentsFolder(function() {
-        console.log("Logs are exported to the Documents folder");
     }, null);
 }, null);
 ```

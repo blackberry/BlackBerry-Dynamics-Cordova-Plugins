@@ -1,6 +1,8 @@
 /*
  *
- * Copyright 2020 BlackBerry Limited.
+ * Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+ * Some modifications to the original Cordova File plugin
+ * from https://github.com/apache/cordova-plugin-file/
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -76,7 +78,7 @@ Entry.prototype.getMetadata = function (successCallback, errorCallback) {
     var fail = errorCallback && function (code) {
         errorCallback(new FileError(code));
     };
-    exec(success, fail, 'File', 'getFileMetadata', [this.toInternalURL()]);
+    exec(success, fail, 'BBDFile', 'getFileMetadata', [this.toInternalURL()]);
 };
 
 /**
@@ -91,7 +93,7 @@ Entry.prototype.getMetadata = function (successCallback, errorCallback) {
  */
 Entry.prototype.setMetadata = function (successCallback, errorCallback, metadataObject) {
     argscheck.checkArgs('FFO', 'Entry.setMetadata', arguments);
-    exec(successCallback, errorCallback, 'File', 'setMetadata', [this.toInternalURL(), metadataObject]);
+    exec(successCallback, errorCallback, 'BBDFile', 'setMetadata', [this.toInternalURL(), metadataObject]);
 };
 
 /**
@@ -132,7 +134,7 @@ Entry.prototype.moveTo = function (parent, newName, successCallback, errorCallba
     };
 
     // copy
-    exec(success, fail, 'File', 'moveTo', [srcURL, parent.toInternalURL(), name]);
+    exec(success, fail, 'BBDFile', 'moveTo', [srcURL, parent.toInternalURL(), name]);
 };
 
 /**
@@ -174,7 +176,7 @@ Entry.prototype.copyTo = function (parent, newName, successCallback, errorCallba
     };
 
     // copy
-    exec(success, fail, 'File', 'copyTo', [srcURL, parent.toInternalURL(), name]);
+    exec(success, fail, 'BBDFile', 'copyTo', [srcURL, parent.toInternalURL(), name]);
 };
 
 /**
@@ -236,7 +238,7 @@ Entry.prototype.remove = function (successCallback, errorCallback) {
     var fail = errorCallback && function (code) {
         errorCallback(new FileError(code));
     };
-    exec(successCallback, fail, 'File', 'remove', [this.toInternalURL()]);
+    exec(successCallback, fail, 'BBDFile', 'remove', [this.toInternalURL()]);
 };
 
 /**
@@ -256,7 +258,7 @@ Entry.prototype.getParent = function (successCallback, errorCallback) {
     var fail = errorCallback && function (code) {
         errorCallback(new FileError(code));
     };
-    exec(win, fail, 'File', 'getParent', [this.toInternalURL()]);
+    exec(win, fail, 'BBDFile', 'getParent', [this.toInternalURL()]);
 };
 
 module.exports = Entry;

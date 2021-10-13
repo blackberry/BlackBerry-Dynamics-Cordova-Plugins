@@ -1,5 +1,5 @@
 /*
-       Copyright (c) 2020 BlackBerry Limited. All Rights Reserved.
+       Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
        Some modifications to the original Cordova File plugin
        from https://github.com/apache/cordova-plugin-file/
 
@@ -175,6 +175,7 @@ public class FileUtils extends GDBasePlugin {
         String tempRoot = null;
         String persistentRoot = null;
         String appKineticsRoot = "/Inbox";
+        String mediaRoot = "/Inbox/media";
 
         Activity activity = cordova.getActivity();
         String packageName = activity.getPackageName();
@@ -202,6 +203,7 @@ public class FileUtils extends GDBasePlugin {
             LocalFilesystem.prepareDirectory(tempRoot);
             LocalFilesystem.prepareDirectory(persistentRoot);
             LocalFilesystem.prepareDirectory(appKineticsRoot);
+            LocalFilesystem.prepareDirectory(mediaRoot);
 
             // Register initial filesystems
             // Note: The temporary and persistent filesystems need to be the first two
@@ -210,6 +212,7 @@ public class FileUtils extends GDBasePlugin {
             this.registerFilesystem(new LocalFilesystem("temporary", webView.getContext(), webView.getResourceApi(), tempRoot));
             this.registerFilesystem(new LocalFilesystem("persistent", webView.getContext(), webView.getResourceApi(), persistentRoot));
             this.registerFilesystem(new LocalFilesystem("appkinetics", webView.getContext(), webView.getResourceApi(), appKineticsRoot));
+            this.registerFilesystem(new LocalFilesystem("media", webView.getContext(), webView.getResourceApi(), mediaRoot));
             this.registerFilesystem(new ContentFilesystem(webView.getContext(), webView.getResourceApi()));
             this.registerFilesystem(new AssetFilesystem(webView.getContext().getAssets(), webView.getResourceApi()));
 
@@ -523,9 +526,6 @@ public class FileUtils extends GDBasePlugin {
                 }
             }, rawArgs, callbackContext);
         }
-        else if (action.equals("exportLogFileToDocumentsFolder")) {
-            handleExportLogFileMethod(callbackContext);
-        }
         else if (action.equals("uploadLogs")) {
             handleUploadLogsMethod(callbackContext);
         }
@@ -533,12 +533,6 @@ public class FileUtils extends GDBasePlugin {
             return false;
         }
         return true;
-    }
-
-    private void handleExportLogFileMethod(final CallbackContext callbackContext) {
-        gdFileSystem.exportLogFileToFilesFolder();
-
-        callbackContext.success();
     }
 
     private void handleUploadLogsMethod(final CallbackContext callbackContext) {
@@ -571,6 +565,7 @@ public class FileUtils extends GDBasePlugin {
         allowedStorageDirectories.add(j.getString("applicationDirectory"));
         allowedStorageDirectories.add(j.getString("applicationStorageDirectory"));
         allowedStorageDirectories.add(j.getString("applicationAppKineticsDirectory"));
+        allowedStorageDirectories.add(j.getString("applicationMediaDirectory"));
 
         if(permissionType == READ && hasReadPermission()) {
             return false;
@@ -991,6 +986,7 @@ public class FileUtils extends GDBasePlugin {
         ret.put("dataDirectory", toDirUrl(context.getFilesDir()));
         ret.put("cacheDirectory", toDirUrl(context.getCacheDir()));
         ret.put("applicationAppKineticsDirectory", "file:///Inbox/");
+        ret.put("applicationMediaDirectory", "file:///Inbox/media");
         return ret;
     }
 

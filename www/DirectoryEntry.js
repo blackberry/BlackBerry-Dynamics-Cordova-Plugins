@@ -1,5 +1,9 @@
 /*
  *
+ * Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+ * Some modifications to the original Cordova File plugin
+ * from https://github.com/apache/cordova-plugin-file/
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -75,7 +79,7 @@ DirectoryEntry.prototype.getDirectory = function (path, options, successCallback
     var fail = errorCallback && function (code) {
         errorCallback(new FileError(code));
     };
-    exec(win, fail, 'File', 'getDirectory', [this.toInternalURL(), path, options]);
+    exec(win, fail, 'BBDFile', 'getDirectory', [this.toInternalURL(), path, options]);
 };
 
 /**
@@ -89,7 +93,7 @@ DirectoryEntry.prototype.removeRecursively = function (successCallback, errorCal
     var fail = errorCallback && function (code) {
         errorCallback(new FileError(code));
     };
-    exec(successCallback, fail, 'File', 'removeRecursively', [this.toInternalURL()]);
+    exec(successCallback, fail, 'BBDFile', 'removeRecursively', [this.toInternalURL()]);
 };
 
 /**
@@ -111,7 +115,7 @@ DirectoryEntry.prototype.getFile = function (path, options, successCallback, err
     var fail = errorCallback && function (code) {
         errorCallback(new FileError(code));
     };
-    exec(win, fail, 'File', 'getFile', [this.toInternalURL(), path, options]);
+    exec(win, fail, 'BBDFile', 'getFile', [this.toInternalURL(), path, options]);
 };
 
 module.exports = DirectoryEntry;

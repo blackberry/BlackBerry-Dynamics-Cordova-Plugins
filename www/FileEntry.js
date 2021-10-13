@@ -1,5 +1,9 @@
 /*
  *
+ * Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+ * Some modifications to the original Cordova File plugin
+ * from https://github.com/apache/cordova-plugin-file/
+ *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -86,7 +90,7 @@ FileEntry.prototype.file = function (successCallback, errorCallback) {
     var fail = errorCallback && function (code) {
         errorCallback(new FileError(code));
     };
-    exec(win, fail, 'File', 'getFileMetadata', [localURL]);
+    exec(win, fail, 'BBDFile', 'getFileMetadata', [localURL]);
 };
 
 module.exports = FileEntry;

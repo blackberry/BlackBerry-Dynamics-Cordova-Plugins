@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2020 BlackBerry Limited. All Rights Reserved.
+ Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
  Some modifications to the original Cordova File plugin
  from https://github.com/apache/cordova-plugin-file/
  
@@ -134,7 +134,6 @@ typedef int CDVFileErrorBD;
 - (void)getFreeDiskSpace:(CDVInvokedUrlCommand*)command;
 - (void)truncate:(CDVInvokedUrlCommand*)command;
 - (void)doCopyMove:(CDVInvokedUrlCommand*)command isCopy:(BOOL)bCopy;
-- (void)exportLogFileToDocumentsFolder:(CDVInvokedUrlCommand *)command;
 - (void)uploadLogs:(CDVInvokedUrlCommand*)command;
 
 /* Compatibilty with older File API */
