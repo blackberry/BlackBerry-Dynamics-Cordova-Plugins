@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  Copyright (c) 2020 BlackBerry Limited. All Rights Reserved.
+  Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
   Some modifications to the original cordova-plugin-file-transfer
   from https://github.com/apache/cordova-plugin-file-transfer/
 
@@ -23,7 +23,7 @@
   under the License.
 -->
 
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-bbd-file-transfer" version="1.1.0">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-bbd-file-transfer" version="1.2.0">
     <name>cordova-plugin-bbd-file-transfer</name>
     <description>BlackBerry Dynamics Cordova File Transfer Plugin</description>
     <license>SEE LICENSE IN LICENSE</license>
@@ -35,8 +35,7 @@
         Original Cordova FileTransfer plugin link: https://github.com/apache/cordova-plugin-file-transfer
     </info>
 
-    <dependency id="cordova-plugin-bbd-file"
-        url="git+https://github.com/blackberry/blackberry-dynamics-cordova-plugins#file" version="^1.1.0" />
+    <dependency id="cordova-plugin-bbd-file" url="git+https://github.com/blackberry/blackberry-dynamics-cordova-plugins#file" version="^1.2.0" />
 
     <js-module src="www/FileTransferError.js" name="FileTransferError">
         <clobbers target="window.FileTransferError" />
@@ -81,4 +80,5 @@
     </platform>
 
     <hook type="after_plugin_install" src="scripts/hooks/afterPluginInstall.js" />
+    <hook type="after_compile" src="scripts/hooks/afterCompile.js" />
 </plugin>

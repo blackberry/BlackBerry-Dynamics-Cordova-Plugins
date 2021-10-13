@@ -1,5 +1,5 @@
 /*
-       Copyright (c) 2020 BlackBerry Limited. All Rights Reserved.
+       Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
        Some modifications to the original Cordova FileTransfer plugin
        from https://github.com/apache/cordova-plugin-file-transfer/
 
@@ -168,12 +168,12 @@ public class BBDFileTransfer extends GDBasePlugin {
      * args[8]  headers       A map of header name/header values
      * args[9]  id            Id of this requested object
      * args[10] httpMethod    HTTP method to use - either PUT or POST
-     * 
+     *
      * @return FileUploadResult containing result of upload request
      */
     private void upload(final String source, final String target, JSONArray args, CallbackContext callbackContext) throws JSONException {
         LOG.d(LOG_TAG, "upload " + source + " to " +  target);
-        
+
         final String objectId = args.getString(9);
 
         final RequestContext context = new RequestContext(source, target, callbackContext);
@@ -640,8 +640,8 @@ public class BBDFileTransfer extends GDBasePlugin {
                 httpRequest.setHeader("Accept-Encoding", "gzip");
 
                 synchronized (context) {
-                    context.httpRequest = httpRequest; 
-                }  
+                    context.httpRequest = httpRequest;
+                }
 
                 final HttpResponse response = httpclient.execute(httpRequest);
                 httpStatus = response.getStatusLine().getStatusCode();
@@ -706,8 +706,8 @@ public class BBDFileTransfer extends GDBasePlugin {
                 if (context.aborted) {
                     throw new IOException("download: force aborted");
                 }
-                context.targetFile = file; 
-            }                
+                context.targetFile = file;
+            }
 
             LOG.d(LOG_TAG, "Saved file: " + filePath);
 
@@ -722,7 +722,7 @@ public class BBDFileTransfer extends GDBasePlugin {
                 progress.setLoaded(bytesLoaded);
                 PluginResult progressResult = new PluginResult(PluginResult.Status.OK, progress.toJSONObject());
                 progressResult.setKeepCallback(true);
-                context.sendPluginResult(progressResult);        
+                context.sendPluginResult(progressResult);
             }
 
             final JSONObject fileEntry = new JSONObject();
@@ -886,7 +886,7 @@ public class BBDFileTransfer extends GDBasePlugin {
             }
         }
         if (pm != null) {
-            filePlugin = pm.getPlugin("File");
+            filePlugin = pm.getPlugin("BBDFile");
             if (filePlugin != null && (filePlugin instanceof FileUtils)) {
                 return (FileUtils)filePlugin;
             }
