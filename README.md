@@ -1,5 +1,5 @@
 # BlackBerry-Dynamics-Cordova-Plugins
-This repository contains three Cordova plugins separated into branches:
+This repository contains following Cordova plugins separated into branches:
  - `file` branch corresponds to [cordova-plugin-bbd-file](https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/file) plugin
  - `file-transfer` branch corresponds to [cordova-plugin-bbd-file-transfer](https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/file-transfer) plugin
  - `sqlite-storage` branch corresponds to [cordova-plugin-bbd-sqlite-storage](https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/sqlite-storage) plugin
