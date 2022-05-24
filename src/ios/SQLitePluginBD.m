@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+ * Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
  * Some modifications to the original Cordova SQLite Storage plugin
  * from https://github.com/xpbrew/cordova-sqlite-storage/
  *
@@ -14,6 +14,8 @@
 
 #import <BlackBerryDynamics/GD_C/sqlite3enc.h>
 #import <BlackBerryDynamics/GD/GDFileManager.h>
+#import <BlackBerryDynamics/GD/GDState.h>
+#import <BlackBerryDynamics/GD/GDiOS.h>
 
 // Defines Macro to only log lines when in DEBUG mode
 #ifdef DEBUG
@@ -41,6 +43,31 @@
 @synthesize appDBPaths;
 
 -(void)pluginInitialize
+{
+    GDState *currentState = [[GDiOS sharedInstance] state];
+
+    if (currentState.isAuthorized) {
+        [self initializeSQLitePlugin];
+    } else {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerGDStateChangeHandler:) name:GDStateChangeNotification object:nil];
+    }
+}
+
+-(void)registerGDStateChangeHandler:(NSNotification *)notification
+{
+    if ([[notification name] isEqualToString:GDStateChangeNotification])
+    {
+        NSDictionary *userInfo = [notification userInfo];
+        NSString *propertyName = [userInfo objectForKey:GDStateChangeKeyProperty];
+
+        if ([propertyName isEqualToString:GDKeyIsAuthorized])
+        {
+            [self initializeSQLitePlugin];
+        }
+    }
+}
+
+-(void)initializeSQLitePlugin
 {
     DLog(@"Initializing SQLitePlugin");
 
