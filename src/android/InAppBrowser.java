@@ -1,5 +1,5 @@
 /*
-       Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+       Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
        Some modifications to the original cordova-plugin-inappbrowser
        from https://github.com/apache/cordova-plugin-inappbrowser/
 
@@ -66,8 +66,9 @@ import android.widget.RelativeLayout;
 import com.good.gd.widget.GDTextView;
 import com.good.gd.widget.GDEditText;
 
-import com.good.gd.cordova.core.webview.BBWebView;
-import com.good.gd.cordova.core.webview.BBWebViewClient;
+import com.blackberry.bbwebview.BBWebView;
+import com.blackberry.bbwebview.BBWebViewClient;
+import com.good.gd.cordova.core.webview.engine.BBDCordovaWebView;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.Config;
@@ -937,7 +938,7 @@ public class InAppBrowser extends CordovaPlugin {
                 footer.addView(footerClose);
 
                 // WebView
-                inAppWebView = new BBWebView(cordova.getActivity());
+                inAppWebView = new BBDCordovaWebView(cordova.getActivity());
 
                 inAppWebView.setLayoutParams(
                         new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -952,7 +953,7 @@ public class InAppBrowser extends CordovaPlugin {
                 settings.setPluginState(android.webkit.WebSettings.PluginState.ON);
 
                 // File Chooser Implemented ChromeClient
-                inAppWebView.setWebChromeClient(new InAppChromeClient(currentClient.getObserver(), thatWebView) {
+                inAppWebView.setWebChromeClient(new InAppChromeClient(thatWebView) {
                     public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback,
                                                      WebChromeClient.FileChooserParams fileChooserParams) {
                         LOG.d(LOG_TAG, "File Chooser 5.0+");

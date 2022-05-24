@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+  Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
   Some modifications to the original cordova-plugin-inappbrowser
   from https://github.com/apache/cordova-plugin-inappbrowser/
 
@@ -22,7 +22,7 @@
   under the License.
 -->
 
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-bbd-inappbrowser" version="1.0.0">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-bbd-inappbrowser" version="1.1.0">
 
     <name>cordova-plugin-bbd-inappbrowser</name>
     <description>Cordova InAppBrowser Plugin</description>
