@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+ Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
  Some modifications to the original Cordova Media Capture plugin
  from https://github.com/apache/cordova-plugin-media-capture/
 
@@ -36,7 +36,7 @@ enum CDVCaptureError {
 };
 typedef NSUInteger CDVCaptureError;
 
-@interface CDVImagePicker : UIImagePickerController
+@interface CDVImagePickerBD : UIImagePickerController
 {
     NSString* callbackid;
     NSInteger quality;
@@ -50,7 +50,7 @@ typedef NSUInteger CDVCaptureError;
 
 @interface CDVCaptureBD : CDVPlugin <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
-    CDVImagePicker* pickerController;
+    CDVImagePickerBD* pickerController;
     BOOL inUse;
 }
 @property BOOL inUse;
@@ -68,7 +68,7 @@ typedef NSUInteger CDVCaptureError;
 
 @end
 
-@interface CDVAudioNavigationController : UINavigationController
+@interface CDVAudioNavigationControllerBD : UINavigationController
 
 @end
 
@@ -79,7 +79,7 @@ typedef NSUInteger CDVCaptureError;
  *  is specified there is no UI to the user - recording just stops when the specified
  *  duration is reached.  The UI has been minimized to avoid localization.
  */
-@interface CDVAudioRecorderViewController : UIViewController <AVAudioRecorderDelegate>
+@interface CDVAudioRecorderViewControllerBD : UIViewController <AVAudioRecorderDelegate>
 {
     CDVCaptureError errorCode;
     NSString* callbackId;

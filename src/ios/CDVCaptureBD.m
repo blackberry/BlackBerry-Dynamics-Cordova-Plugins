@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+ Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
  Some modifications to the original Cordova Media Capture plugin
  from https://github.com/apache/cordova-plugin-media-capture/
 
@@ -23,7 +23,12 @@
 
 
 #import <BlackBerryDynamics/GD/GDFileManager.h>
+
+#ifdef BBD_CAPACITOR
+#import "BbdStoragePathHelper.h"
+#else
 #import <BbdBasePlugin/BbdStoragePathHelper.h>
+#endif
 
 #import "CDVCaptureBD.h"
 
@@ -100,7 +105,7 @@
 
 #define PluginLocalizedString(plugin, key, comment) [[NSBundle pluginBundle:(plugin)] localizedStringForKey:(key) value:nil table:nil]
 
-@implementation CDVImagePicker
+@implementation CDVImagePickerBD
 
 @synthesize quality;
 @synthesize callbackId;
@@ -168,10 +173,10 @@
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageToErrorObject:CAPTURE_APPLICATION_BUSY];
     } else {
         // all the work occurs here
-        CDVAudioRecorderViewController* audioViewController = [[CDVAudioRecorderViewController alloc] initWithCommand:self duration:duration callbackId:callbackId];
+        CDVAudioRecorderViewControllerBD* audioViewController = [[CDVAudioRecorderViewControllerBD alloc] initWithCommand:self duration:duration callbackId:callbackId];
 
         // Now create a nav controller and display the view...
-        CDVAudioNavigationController* navController = [[CDVAudioNavigationController alloc] initWithRootViewController:audioViewController];
+        CDVAudioNavigationControllerBD* navController = [[CDVAudioNavigationControllerBD alloc] initWithRootViewController:audioViewController];
 
         self.inUse = YES;
 
@@ -202,7 +207,7 @@
         [self.commandDelegate sendPluginResult:result callbackId:callbackId];
     } else {
         if (pickerController == nil) {
-            pickerController = [[CDVImagePicker alloc] init];
+            pickerController = [[CDVImagePickerBD alloc] init];
         }
 
         [self showAlertIfAccessProhibited];
@@ -220,7 +225,7 @@
             pickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
             pickerController.cameraFlashMode = UIImagePickerControllerCameraFlashModeAuto;
         }*/
-        // CDVImagePicker specific property
+        // CDVImagePickerBD specific property
         pickerController.callbackId = callbackId;
         pickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
         [self.viewController presentViewController:pickerController animated:YES completion:nil];
@@ -286,7 +291,7 @@
 
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // there is a camera, it is available, make sure it can do movies
-        pickerController = [[CDVImagePicker alloc] init];
+        pickerController = [[CDVImagePickerBD alloc] init];
 
         NSArray* types = nil;
         if ([UIImagePickerController respondsToSelector:@selector(availableMediaTypesForSourceType:)]) {
@@ -329,7 +334,7 @@
             // pickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
             // pickerController.cameraFlashMode = UIImagePickerControllerCameraFlashModeAuto;
         }
-        // CDVImagePicker specific property
+        // CDVImagePickerBD specific property
         pickerController.callbackId = callbackId;
         pickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
         [self.viewController presentViewController:pickerController animated:YES completion:nil];
@@ -611,7 +616,7 @@
  */
 - (void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary*)info
 {
-    CDVImagePicker* cameraPicker = (CDVImagePicker*)picker;
+    CDVImagePickerBD* cameraPicker = (CDVImagePickerBD*)picker;
     NSString* callbackId = cameraPicker.callbackId;
 
     [[picker presentingViewController] dismissViewControllerAnimated:YES completion:nil];
@@ -648,7 +653,7 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController*)picker
 {
-    CDVImagePicker* cameraPicker = (CDVImagePicker*)picker;
+    CDVImagePickerBD* cameraPicker = (CDVImagePickerBD*)picker;
     NSString* callbackId = cameraPicker.callbackId;
 
     [[picker presentingViewController] dismissViewControllerAnimated:YES completion:nil];
@@ -660,7 +665,7 @@
 
 @end
 
-@implementation CDVAudioNavigationController
+@implementation CDVAudioNavigationControllerBD
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
@@ -670,12 +675,12 @@
 
 @end
 
-@interface CDVAudioRecorderViewController () {
+@interface CDVAudioRecorderViewControllerBD () {
     UIStatusBarStyle _previousStatusBarStyle;
 }
 @end
 
-@implementation CDVAudioRecorderViewController
+@implementation CDVAudioRecorderViewControllerBD
 @synthesize errorCode, callbackId, duration, captureCommand, doneButton, recordingView, recordButton, recordImage, stopRecordImage, timerLabel, avRecorder, avSession, pluginResult, timer, isTimed;
 
 - (NSString*)resolveImageResource:(NSString*)resource
@@ -684,7 +689,7 @@
     BOOL isLessThaniOS4 = ([systemVersion compare:@"4.0" options:NSNumericSearch] == NSOrderedAscending);
 
     // the iPad image (nor retina) differentiation code was not in 3.x, and we have to explicitly set the path
-    // if user wants iPhone only app to run on iPad they must remove *~ipad.* images from CDVCapture.bundle
+    // if user wants iPhone only app to run on iPad they must remove *~ipad.* images from CDVCaptureBD.bundle
     if (isLessThaniOS4) {
         NSString* iPadResource = [NSString stringWithFormat:@"%@~ipad.png", resource];
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && [UIImage imageNamed:iPadResource]) {
@@ -724,11 +729,11 @@
     UIView* tmp = [[UIView alloc] initWithFrame:viewRect];
 
     // make backgrounds
-    NSString* microphoneResource = @"CDVCapture.bundle/microphone";
+    NSString* microphoneResource = @"CDVCaptureBD.bundle/microphone";
 
     BOOL isIphone5 = ([[UIScreen mainScreen] bounds].size.width == 568 && [[UIScreen mainScreen] bounds].size.height == 320) || ([[UIScreen mainScreen] bounds].size.height == 568 && [[UIScreen mainScreen] bounds].size.width == 320);
     if (isIphone5) {
-        microphoneResource = @"CDVCapture.bundle/microphone-568h";
+        microphoneResource = @"CDVCaptureBD.bundle/microphone-568h";
     }
 
     NSBundle* cdvBundle = [NSBundle bundleForClass:[CDVCaptureBD class]];
@@ -740,7 +745,7 @@
     [tmp addSubview:microphoneView];
 
     // add bottom bar view
-    UIImage* grayBkg = [UIImage imageNamed:[self resolveImageResource:@"CDVCapture.bundle/controls_bg"] inBundle:cdvBundle compatibleWithTraitCollection:nil];
+    UIImage* grayBkg = [UIImage imageNamed:[self resolveImageResource:@"CDVCaptureBD.bundle/controls_bg"] inBundle:cdvBundle compatibleWithTraitCollection:nil];
     UIView* controls = [[UIView alloc] initWithFrame:CGRectMake(0, microphone.size.height, viewRect.size.width, grayBkg.size.height)];
     [controls setBackgroundColor:[UIColor colorWithPatternImage:grayBkg]];
     [controls setUserInteractionEnabled:NO];
@@ -748,7 +753,7 @@
     [tmp addSubview:controls];
 
     // make red recording background view
-    UIImage* recordingBkg = [UIImage imageNamed:[self resolveImageResource:@"CDVCapture.bundle/recording_bg"] inBundle:cdvBundle compatibleWithTraitCollection:nil];
+    UIImage* recordingBkg = [UIImage imageNamed:[self resolveImageResource:@"CDVCaptureBD.bundle/recording_bg"] inBundle:cdvBundle compatibleWithTraitCollection:nil];
     UIColor* background = [UIColor colorWithPatternImage:recordingBkg];
     self.recordingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewRect.size.width, recordingBkg.size.height)];
     [self.recordingView setBackgroundColor:background];
@@ -771,8 +776,8 @@
 
     // Add record button
 
-    self.recordImage = [UIImage imageNamed:[self resolveImageResource:@"CDVCapture.bundle/record_button"] inBundle:cdvBundle compatibleWithTraitCollection:nil];
-    self.stopRecordImage = [UIImage imageNamed:[self resolveImageResource:@"CDVCapture.bundle/stop_button"] inBundle:cdvBundle compatibleWithTraitCollection:nil];
+    self.recordImage = [UIImage imageNamed:[self resolveImageResource:@"CDVCaptureBD.bundle/record_button"] inBundle:cdvBundle compatibleWithTraitCollection:nil];
+    self.stopRecordImage = [UIImage imageNamed:[self resolveImageResource:@"CDVCaptureBD.bundle/stop_button"] inBundle:cdvBundle compatibleWithTraitCollection:nil];
     self.recordButton.accessibilityTraits |= [self accessibilityTraits];
     self.recordButton = [[UIButton alloc] initWithFrame:CGRectMake((viewRect.size.width - recordImage.size.width) / 2, (microphone.size.height + (grayBkg.size.height - recordImage.size.height) / 2), recordImage.size.width, recordImage.size.height)];
     [self.recordButton setAccessibilityLabel:PluginLocalizedString(captureCommand, @"toggle audio recording", nil)];
@@ -861,7 +866,7 @@
         [self.recordingView setHidden:NO];
         __block NSError* error = nil;
 
-        __weak CDVAudioRecorderViewController* weakSelf = self;
+        __weak CDVAudioRecorderViewControllerBD* weakSelf = self;
 
         void (^startRecording)(void) = ^{
             [weakSelf.avSession setCategory:AVAudioSessionCategoryRecord error:&error];

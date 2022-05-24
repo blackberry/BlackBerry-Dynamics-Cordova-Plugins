@@ -1,5 +1,5 @@
 /*
-       Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+       Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
        Some modifications to the original Cordova Media Capture plugin
        from https://github.com/apache/cordova-plugin-media-capture
 
@@ -104,8 +104,8 @@ public class BBDCapture extends CordovaPlugin {
 
         cameraPermissionInManifest = false;
         try {
-            PackageManager packageManager = this.cordova.getActivity().getPackageManager();
-            String[] permissionsInPackage = packageManager.getPackageInfo(this.cordova.getActivity().getPackageName(), PackageManager.GET_PERMISSIONS).requestedPermissions;
+            PackageManager packageManager = this.cordova.getContext().getPackageManager();
+            String[] permissionsInPackage = packageManager.getPackageInfo(this.cordova.getContext().getPackageName(), PackageManager.GET_PERMISSIONS).requestedPermissions;
             if (permissionsInPackage != null) {
                 for (String permission : permissionsInPackage) {
                     if (permission.equals(Manifest.permission.CAMERA)) {
@@ -266,7 +266,7 @@ public class BBDCapture extends CordovaPlugin {
         File cache = null;
 
         // Use internal storage
-        cache = cordova.getActivity().getCacheDir();
+        cache = cordova.getContext().getCacheDir();
 
         // Create the cache directory if it doesn't exist
         cache.mkdirs();
@@ -297,7 +297,7 @@ public class BBDCapture extends CordovaPlugin {
 
             Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 
-            ContentResolver contentResolver = this.cordova.getActivity().getContentResolver();
+            ContentResolver contentResolver = this.cordova.getContext().getContentResolver();
             ContentValues cv = new ContentValues();
             cv.put(MediaStore.Images.Media.MIME_TYPE, IMAGE_JPEG);
             imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cv);
@@ -532,7 +532,7 @@ public class BBDCapture extends CordovaPlugin {
 
         // Query for the ID of the media matching the file path
         Uri queryUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-        ContentResolver contentResolver = this.cordova.getActivity().getContentResolver();
+        ContentResolver contentResolver = this.cordova.getContext().getContentResolver();
         Cursor c = contentResolver.query(queryUri, projection, selection, selectionArgs, null);
         if (c.moveToFirst()) {
             // We found the ID. Deleting the item via the content provider will also remove the file
@@ -554,7 +554,7 @@ public class BBDCapture extends CordovaPlugin {
 
         // Query for the ID of the media matching the file path
         Uri queryUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        ContentResolver contentResolver = this.cordova.getActivity().getContentResolver();
+        ContentResolver contentResolver = this.cordova.getContext().getContentResolver();
         Cursor c = contentResolver.query(queryUri, projection, selection, selectionArgs, null);
         if (c.moveToFirst()) {
             // We found the ID. Deleting the item via the content provider will also remove the file
@@ -576,7 +576,7 @@ public class BBDCapture extends CordovaPlugin {
 
         // Query for the ID of the media matching the file path
         Uri queryUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-        ContentResolver contentResolver = this.cordova.getActivity().getContentResolver();
+        ContentResolver contentResolver = this.cordova.getContext().getContentResolver();
         Cursor c = contentResolver.query(queryUri, projection, selection, selectionArgs, null);
         if (c.moveToFirst()) {
             // We found the ID. Deleting the item via the content provider will also remove the file
@@ -692,7 +692,7 @@ public class BBDCapture extends CordovaPlugin {
      * @return a cursor
      */
     private Cursor queryImgDB(Uri contentStore) {
-        return this.cordova.getActivity().getContentResolver().query(
+        return this.cordova.getContext().getContentResolver().query(
             contentStore,
             new String[] { MediaStore.Images.Media._ID },
             null,
@@ -714,7 +714,7 @@ public class BBDCapture extends CordovaPlugin {
             cursor.moveToLast();
             int id = Integer.valueOf(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media._ID))) - 1;
             Uri uri = Uri.parse(contentStore + "/" + id);
-            this.cordova.getActivity().getContentResolver().delete(uri, null, null);
+            this.cordova.getContext().getContentResolver().delete(uri, null, null);
         }
     }
 

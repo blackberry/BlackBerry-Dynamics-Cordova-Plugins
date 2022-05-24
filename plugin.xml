@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+  Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
   Some modifications to the original cordova-plugin-file
   from https://github.com/apache/cordova-plugin-media-capture
 
@@ -25,7 +25,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
            id="cordova-plugin-bbd-media-capture"
-      version="1.0.0">
+      version="1.1.0">
     <name>cordova-plugin-bbd-media-capture</name>
 
     <description>BlackBerry Dynamics Media Capture Plugin</description>
@@ -45,7 +45,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     <dependency
         id="cordova-plugin-bbd-file"
         url="git+https://github.com/blackberry/blackberry-dynamics-cordova-plugins#file"
-        version="^1.2.0" />
+        version="^1.3.0" />
 
     <js-module src="www/CaptureAudioOptions.js" name="CaptureAudioOptions">
         <clobbers target="CaptureAudioOptions" />
@@ -112,7 +112,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         </config-file>
         <header-file src="src/ios/CDVCaptureBD.h" />
         <source-file src="src/ios/CDVCaptureBD.m" />
-        <resource-file src="src/ios/CDVCapture.bundle" />
+        <resource-file src="src/ios/CDVCaptureBD.bundle" />
 
         <framework src="CoreGraphics.framework" />
         <framework src="MobileCoreServices.framework" />

@@ -1,12 +1,12 @@
 {
   "name": "cordova-plugin-bbd-media-capture",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "BlackBerry Dynamics Media Capture Plugin",
   "license": "SEE LICENSE IN LICENSE",
   "homepage": "https://community.blackberry.com",
   "repository": {
     "name": "cordova-plugin-bbd-media-capture",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "private": true,
     "type": "git",
     "url": "git+https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/media-capture"

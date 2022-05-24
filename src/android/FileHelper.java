@@ -1,5 +1,5 @@
 /*
-       Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+       Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
        Some modifications to the original Cordova Media Capture plugin
        from https://github.com/apache/cordova-plugin-media-capture
 
@@ -54,7 +54,7 @@ public class FileHelper {
     public static String getMimeType(Uri uri, CordovaInterface cordova) {
         String mimeType = null;
         if ("content".equals(uri.getScheme())) {
-            mimeType = cordova.getActivity().getContentResolver().getType(uri);
+            mimeType = cordova.getContext().getContentResolver().getType(uri);
         } else {
             mimeType = getMimeTypeForExtension(uri.getPath());
         }
