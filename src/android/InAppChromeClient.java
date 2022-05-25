@@ -1,5 +1,5 @@
 /*
-       Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+       Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
        Some modifications to the original cordova-plugin-inappbrowser
        from https://github.com/apache/cordova-plugin-inappbrowser/
 
@@ -36,17 +36,15 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.GeolocationPermissions.Callback;
 
-import com.good.gd.cordova.core.webview.BBChromeClient;
-import com.good.gd.cordova.core.webview.WebClientObserver;
+import com.blackberry.bbwebview.BBWebChromeClient;
 
-public class InAppChromeClient extends BBChromeClient {
+public class InAppChromeClient extends BBWebChromeClient {
 
     private CordovaWebView webView;
     private String LOG_TAG = "InAppChromeClient";
     private long MAX_QUOTA = 100 * 1024 * 1024;
 
-    public InAppChromeClient(WebClientObserver clientObserver, CordovaWebView webView) {
-        super(clientObserver);
+    public InAppChromeClient(CordovaWebView webView) {
         this.webView = webView;
     }
     /**
