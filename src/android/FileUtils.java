@@ -1,5 +1,5 @@
 /*
-       Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+       Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
        Some modifications to the original Cordova File plugin
        from https://github.com/apache/cordova-plugin-file/
 
@@ -979,7 +979,7 @@ public class FileUtils extends GDBasePlugin {
     }
 
     private JSONObject requestAllPaths() throws JSONException {
-        Context context = cordova.getActivity();
+        Context context = cordova.getContext();
         JSONObject ret = new JSONObject();
         ret.put("applicationDirectory", "file:///android_asset/");
         ret.put("applicationStorageDirectory", toDirUrl(context.getFilesDir().getParentFile()));

@@ -1,8 +1,8 @@
 /*
- Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+ Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
  Some modifications to the original Cordova File plugin
  from https://github.com/apache/cordova-plugin-file/
- 
+
  Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements.  See the NOTICE file
  distributed with this work for additional information
@@ -27,12 +27,14 @@
 #import "CDVAssetLibraryFilesystemBD.h"
 #import <objc/message.h>
 #import <BlackBerryDynamics/GD/GDFileManager.h>
+#import <BlackBerryDynamics/GD/GDState.h>
+#import <BlackBerryDynamics/GD/GDiOS.h>
 
 static NSString* toBase64(NSData* data) {
     SEL s1 = NSSelectorFromString(@"cdv_base64EncodedString");
     SEL s2 = NSSelectorFromString(@"base64EncodedString");
     SEL s3 = NSSelectorFromString(@"base64EncodedStringWithOptions:");
-    
+
     if ([data respondsToSelector:s1]) {
         NSString* (*func)(id, SEL) = (void *)[data methodForSelector:s1];
         return func(data, s1);
@@ -165,7 +167,7 @@ NSString* const kCDVFilesystemURLPrefixBD = @"cdvfile";
     CDVFilesystemURLBD* url = [CDVFilesystemURLBD fileSystemURLWithURL:[[self request] URL]];
     NSObject<CDVFileSystemBD> *fs = [filePluginBD filesystemForURL:url];
     __weak CDVFilesystemURLProtocolBD* weakSelf = self;
-    
+
     [fs readFileAtURL:url start:0 end:-1 callback:^void(NSData *data, NSString *mimetype, CDVFileErrorBD error) {
         NSMutableDictionary* responseHeaders = [[NSMutableDictionary alloc] init];
         responseHeaders[@"Cache-Control"] = @"no-cache";
@@ -310,6 +312,31 @@ NSString* const kCDVFilesystemURLPrefixBD = @"cdvfile";
 
 - (void)pluginInitialize
 {
+    GDState *currentState = [[GDiOS sharedInstance] state];
+
+    if (currentState.isAuthorized) {
+        [self initializeFilePlugin];
+    } else {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerGDStateChangeHandler:) name:GDStateChangeNotification object:nil];
+    }
+}
+
+-(void)registerGDStateChangeHandler:(NSNotification *)notification
+{
+    if ([[notification name] isEqualToString:GDStateChangeNotification])
+    {
+        NSDictionary *userInfo = [notification userInfo];
+        NSString *propertyName = [userInfo objectForKey:GDStateChangeKeyProperty];
+
+        if ([propertyName isEqualToString:GDKeyIsAuthorized])
+        {
+            [self initializeFilePlugin];
+        }
+    }
+}
+
+- (void)initializeFilePlugin
+{
     filePluginBD = self;
     [NSURLProtocol registerClass:[CDVFilesystemURLProtocolBD class]];
 
@@ -341,7 +368,7 @@ NSString* const kCDVFilesystemURLPrefixBD = @"cdvfile";
     }
 
     NSError *error;
-    
+
     if ([[GDFileManager defaultManager] createDirectoryAtPath:self.appTempPath
                                   withIntermediateDirectories:YES
                                                    attributes:nil
@@ -683,14 +710,14 @@ NSString* const kCDVFilesystemURLPrefixBD = @"cdvfile";
     NSDictionary* options = [command argumentAtIndex:2 withDefault:nil];
 
     NSObject<CDVFileSystemBD> *fs = [self filesystemForURL:baseURI];
-    
+
     CDVPluginResult* result = nil;
     if ([requestedPath length] == 0 || [requestedPath hasSuffix:@"/"]) {
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:SYNTAX_ERR];
     } else {
         result = [fs getFileForURL:baseURI requestedPath:requestedPath options:options];
     }
-    
+
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
@@ -1106,7 +1133,7 @@ NSString* const kCDVFilesystemURLPrefixBD = @"cdvfile";
 - (void)getFreeDiskSpace:(CDVInvokedUrlCommand*)command
 {
     // no arguments
-    
+
     NSNumber* pNumAvail = [self checkFreeDiskSpace:self.rootDocsPath];
 
     NSString* strFreeSpace = [NSString stringWithFormat:@"%qu", [pNumAvail unsignedLongLongValue]];
