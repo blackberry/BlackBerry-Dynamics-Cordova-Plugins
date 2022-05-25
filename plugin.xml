@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
+  Some modifications to the original cordova-plugin-file
+  from https://github.com/apache/cordova-plugin-file/
+
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="capacitor-plugin-bbd-base" version="1.0.0">
+    <name>BlackBerry Dynamics Capacitor Base plugin</name>
+    <description>
+        This is Base plugin. It adds all the needed configuration to enable using
+        BlackBerry Dynamics in your Capacotpr Ionic application.
+        All the other BlackBerry Dynamics Cordova plugins require the Base plugin to be installed.
+    </description>
+    <keywords>capacitor,plugin,base</keywords>
+    <license>SEE LICENSE IN LICENSE</license>
+    <info>
+        This plugin enables using BlackBerry Dynamics in your Capacotpr Ionic application.
+    </info>
+
+    <engines>
+        <engine name="cordova-android" version=">=10.1.1"/>
+        <engine name="cordova-ios" version=">=6.2.0"/>
+    </engines>
+
+    <!-- Android -->
+    <platform name="android">
+        <framework src="scripts/gradle/bbd.gradle" custom="true" type="gradleReference" />
+
+        <resource-file src="src/android/res/drawable/ic_transparent.xml" target="res/drawable/ic_transparent.xml" />
+        <resource-file src="src/android/res/layout/bb_bridge_layout_main.xml" target="res/layout/bb_bridge_layout_main.xml" />
+        <resource-file src="src/android/res/layout/bb_fragment_bridge.xml" target="res/layout/bb_fragment_bridge.xml" />
+        <resource-file src="src/android/res/values/attrs.xml" target="res/values/attrs.xml" />
+        <resource-file src="src/android/res/values/colors.xml" target="res/values/colors.xml" />
+        <resource-file src="src/android/res/values/strings.xml" target="res/values/strings.xml" />
+        <resource-file src="src/android/res/values/styles.xml" target="res/values/styles.xml" />
+        <resource-file src="assets/android/settings.json" target="assets/settings.json" />
+        <resource-file src="assets/android/com.blackberry.dynamics.settings.json" target="assets/com.blackberry.dynamics.settings.json" />
+
+        <source-file src="src/android/com/getcapacitor/dynamics/BBDLifeCycle.java" target-dir="src/com/good/gd/cordova/core/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/BBDCordovaApp.java" target-dir="src/com/good/gd/cordova/core/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/helpers/CordovaGDServiceHelper.java" target-dir="src/com/good/gd/cordova/plugins/helpers/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/helpers/GDBasePlugin.java" target-dir="src/com/good/gd/cordova/plugins/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/launcher/BBDLauncherInterfaceProvider.java" target-dir="src/com/good/gd/cordova/core/launcher/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/launcher/BBDLauncherManager.java" target-dir="src/com/good/gd/cordova/core/launcher/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/utils/AppUtils.java" target-dir="src/com/good/gd/cordova/core/utils/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/helpers/delegates/GDFileSystemDelegate.java" target-dir="src/com/good/gd/cordova/plugins/helpers/delegates/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/Consts.java" target-dir="src/com/good/gd/apache/http/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/ContentType.java" target-dir="src/com/good/gd/apache/http/entity/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/AbstractMultipartForm.java" target-dir="src/com/good/gd/apache/http/entity/mime/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/content/AbstractContentBody.java" target-dir="src/com/good/gd/apache/http/entity/mime/content/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/content/ByteArrayBody.java" target-dir="src/com/good/gd/apache/http/entity/mime/content/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/content/ContentBody.java" target-dir="src/com/good/gd/apache/http/entity/mime/content/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/content/ContentDescriptor.java" target-dir="src/com/good/gd/apache/http/entity/mime/content/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/content/FileBody.java" target-dir="src/com/good/gd/apache/http/entity/mime/content/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/content/InputStreamBody.java" target-dir="src/com/good/gd/apache/http/entity/mime/content/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/content/StringBody.java" target-dir="src/com/good/gd/apache/http/entity/mime/content/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/FormBodyPart.java" target-dir="src/com/good/gd/apache/http/entity/mime/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/FormBodyPartBuilder.java" target-dir="src/com/good/gd/apache/http/entity/mime/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/Header.java" target-dir="src/com/good/gd/apache/http/entity/mime/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/HttpBrowserCompatibleMultipart.java" target-dir="src/com/good/gd/apache/http/entity/mime/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/HttpMultipartMode.java" target-dir="src/com/good/gd/apache/http/entity/mime/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/HttpRFC6532Multipart.java" target-dir="src/com/good/gd/apache/http/entity/mime/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/HttpStrictMultipart.java" target-dir="src/com/good/gd/apache/http/entity/mime/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/MIME.java" target-dir="src/com/good/gd/apache/http/entity/mime/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/MinimalField.java" target-dir="src/com/good/gd/apache/http/entity/mime/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/MultipartEntityBuilder.java" target-dir="src/com/good/gd/apache/http/entity/mime/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/entity/mime/MultipartFormEntity.java" target-dir="src/com/good/gd/apache/http/entity/mime/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/util/Args.java" target-dir="src/com/good/gd/apache/http/entity/mime/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/util/CharsetUtils.java" target-dir="src/com/good/gd/apache/http/entity/mime/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/apache/http/util/TextUtils.java" target-dir="src/com/good/gd/apache/http/entity/mime/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/progress/OutputStreamProgress.java" target-dir="src/com/good/gd/cordova/core/progress/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/progress/FileBody.java" target-dir="src/com/good/gd/cordova/core/progress/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/utils/GDFileUtils.java" target-dir="src/com/good/gd/cordova/core/utils/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/helpers/delegates/GDFileTransferDelegate.java" target-dir="src/com/good/gd/cordova/plugins/helpers/delegates/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/helpers/delegates/GDHttpRequestDelegate.java" target-dir="src/com/good/gd/cordova/plugins/helpers/delegates/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/helpers/delegates/GDTokenDelegate.java" target-dir="src/com/good/gd/cordova/plugins/helpers/delegates/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/helpers/creators/GDSocketCreator.java" target-dir="src/com/good/gd/cordova/plugins/helpers/creators/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/helpers/GDHttpRequestPluginHelper.java" target-dir="src/com/good/gd/cordova/plugins/helpers/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/helpers/GDSQLiteImporterHelper.java" target-dir="src/com/good/gd/cordova/plugins/helpers/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/helpers/GDStreamHelper.java" target-dir="src/com/good/gd/cordova/plugins/helpers/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/mailto/BBDCordovaMailTo.java" target-dir="src/com/good/gd/cordova/core/mailto/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/mailto/BBDMailTo.java" target-dir="src/com/good/gd/cordova/core/mailto/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/mailto/BBDMailToHandler.java" target-dir="src/com/good/gd/cordova/core/mailto/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/mailto/MailToInterceptor.java" target-dir="src/com/good/gd/cordova/core/mailto/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/mailto/MailToProvider.java" target-dir="src/com/good/gd/cordova/core/mailto/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/webview/engine/BBDCordovaWebChromeClient.java" target-dir="src/com/good/gd/cordova/core/webview/engine/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/webview/engine/BBDCordovaWebView.java" target-dir="src/com/good/gd/cordova/core/webview/engine/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/webview/engine/BBDCordovaWebViewEngine.java" target-dir="src/com/good/gd/cordova/core/webview/engine/" />
+        <source-file src="src/android/com/getcapacitor/dynamics/webview/engine/BBDExposedJsApi.java" target-dir="src/com/good/gd/cordova/core/webview/engine/" />
+        <source-file src="src/android/com/getcapacitor/ActivityCallback.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/CapacitorPlugin.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/Permission.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/PermissionCallback.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/CapacitorCordovaCookieManager.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/MockCordovaInterfaceImpl.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/MockCordovaWebViewImpl.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/AssetUtil.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/WebView.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/HostMask.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/JSONUtils.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/PermissionHelper.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/WebColor.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/AndroidProtocolHandler.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/App.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/Bridge.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/BridgeActivity.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/BridgeFragment.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/BridgeWebChromeClient.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/BridgeWebViewClient.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/CapacitorWebView.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/CapConfig.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/FileUtils.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/InvalidPluginException.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/InvalidPluginMethodException.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/JSArray.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/JSExport.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/JSExportException.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/JSInjector.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/JSObject.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/Logger.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/MessageHandler.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/NativePlugin.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/PermissionState.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/Plugin.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/PluginCall.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/PluginConfig.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/PluginHandle.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/PluginInvocationException.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/PluginLoadException.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/PluginManager.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/PluginMethod.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/PluginMethodHandle.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/PluginResult.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/UriMatcher.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/WebViewListener.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+        <source-file src="src/android/com/getcapacitor/WebViewLocalServer.java" target-dir="src/com/good/gd/cordova/capacitor/" />
+
+    </platform>
+
+    <!-- iOS -->
+    <platform name="ios">
+        <header-file src="src/ios/Core/UIApplication+BBDCapacitor.h" />
+        <source-file src="src/ios/Core/UIApplication+BBDCapacitor.m" />
+
+        <header-file src="src/ios/utils/BbdCapacitorRuntime.h" />
+        <source-file src="src/ios/utils/BbdCapacitorRuntime.m" />
+
+        <header-file src="src/ios/utils/BbdClientCertAssistant.h" />
+        <source-file src="src/ios/utils/BbdClientCertAssistant.m" />
+
+        <header-file src="src/ios/utils/BbdStoragePathHelper.h" />
+        <source-file src="src/ios/utils/BbdStoragePathHelper.m" />
+
+        <header-file src="src/ios/utils/GDCBasePlugin.h" />
+        <source-file src="src/ios/utils/GDCBasePlugin.m" />
+
+        <header-file src="src/ios/utils/GDCordovaLogger.h" />
+        <source-file src="src/ios/utils/GDCordovaLogger.m" />
+
+        <header-file src="src/ios/utils/GDCLog.h" />
+    </platform>
+</plugin>
