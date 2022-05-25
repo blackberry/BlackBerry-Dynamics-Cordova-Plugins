@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2021 BlackBerry Limited. All Rights Reserved.
+ Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
  Some modifications to the original Cordova FileTransfer plugin
  from https://github.com/apache/cordova-plugin-file-transfer/
  
@@ -31,7 +31,12 @@
 #import <CFNetwork/CFNetwork.h>
 
 #import <BlackBerryDynamics/GD/GDFileManager.h>
+
+#ifdef BBD_CAPACITOR
+#import "GDCordovaLogger.h"
+#else
 #import <BbdBasePlugin/GDCordovaLogger.h>
+#endif
 
 #ifndef DLog
 #ifdef DEBUG
