@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 BlackBerry Limited. All Rights Reserved.
+ * Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
  * Some modifications to the original Cordova SQLite Storage plugin
  * from https://github.com/xpbrew/cordova-sqlite-storage/
  *
@@ -214,8 +214,8 @@ public class BBDSQLitePlugin extends GDBasePlugin {
         OutputStream out = null;
         InputStream in = null;
         File tempDbFile = null;
-        Context context = this.cordova.getActivity().getApplicationContext();
-        AssetManager assetsManager = this.cordova.getActivity().getAssets();
+        Context context = this.cordova.getContext().getApplicationContext();
+        AssetManager assetsManager = this.cordova.getContext().getAssets();
         File dbFile = null;
 
         try {
@@ -316,7 +316,7 @@ public class BBDSQLitePlugin extends GDBasePlugin {
     //   * @throws Exception
     */
     private SQLiteDatabase openDatabase(String dbname, String assetFilePath, int openFlags, CallbackContext cbc) throws Exception {
-        Context context = this.cordova.getActivity().getApplicationContext();
+        Context context = this.cordova.getContext().getApplicationContext();
         InputStream in = null;
         File dbfile = null;
         try {
@@ -494,7 +494,7 @@ public class BBDSQLitePlugin extends GDBasePlugin {
      * @param cbc - JS callback
     */
     private void attachDatabase(String dbname, String dbnameToAttach, String dbalias, CallbackContext cbc) {
-        Context context = this.cordova.getActivity().getApplicationContext();
+        Context context = this.cordova.getContext().getApplicationContext();
         DBRunner runner = dbrmap.get(dbname);
         if (runner != null) {
             File databasePath = context.getDatabasePath(dbnameToAttach);
@@ -546,7 +546,7 @@ public class BBDSQLitePlugin extends GDBasePlugin {
      * @return true if successful or false if an exception was encountered
      */
     private boolean deleteDatabaseNow(String dbname) {
-        Context context = this.cordova.getActivity().getApplicationContext();
+        Context context = this.cordova.getContext().getApplicationContext();
         File dbfile = context.getDatabasePath(dbname);
         File gdFile = gdFileSystem.createFile(dbfile.getAbsolutePath());
         return SQLiteDatabase.deleteDatabase((com.good.gd.file.File) gdFile);
