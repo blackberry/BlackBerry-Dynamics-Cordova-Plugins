@@ -89,43 +89,43 @@ It becomes the default webview for Dynamics Ionic-Capacitor applications on Andr
  *Installation*: `$ npm install git+https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins#media-capture`
  *Uninstallation*: `$ npm uninstall cordova-plugin-bbd-media-capture`
  - **cordova-plugin-bbd-appkinetics**
- *Installation*: `$ npm install cordova-plugin-bbd-appkinetics`
+ *Installation*: `$ npm install <path>/BlackBerry_Dynamics_SDK_for_Cordova_<version>/plugins/cordova-plugin-bbd-appkinetics`
  *Uninstallation*: `$ npm uninstall cordova-plugin-bbd-appkinetics`
  - **cordova-plugin-bbd-application**
- *Installation*: `$ npm install cordova-plugin-bbd-application`
+ *Installation*: `$ npm install <path>/BlackBerry_Dynamics_SDK_for_Cordova_<version>/plugins/cordova-plugin-bbd-application`
  *Uninstallation*: `$ npm uninstall cordova-plugin-bbd-application`
  - **cordova-plugin-bbd-httprequest**
- *Installation*: `$ npm install cordova-plugin-bbd-httprequest`
+ *Installation*: `$ npm install <path>/BlackBerry_Dynamics_SDK_for_Cordova_<version>/plugins/cordova-plugin-bbd-httprequest`
  *Uninstallation*: `$ npm uninstall cordova-plugin-bbd-httprequest`
  - **cordova-plugin-bbd-interappcommunication**
- *Installation*: `$ npm install cordova-plugin-bbd-interappcommunication`
+ *Installation*: `$ npm install <path>/BlackBerry_Dynamics_SDK_for_Cordova_<version>/plugins/cordova-plugin-bbd-interappcommunication`
  *Uninstallation*: `$ npm uninstall cordova-plugin-bbd-interappcommunication`
  - **cordova-plugin-bbd-launcher**
- *Installation*: `$ npm install cordova-plugin-bbd-launcher`
+ *Installation*: `$ npm install <path>/BlackBerry_Dynamics_SDK_for_Cordova_<version>/plugins/cordova-plugin-bbd-launcher`
  *Uninstallation*: `$ npm uninstall cordova-plugin-bbd-launcher`
  - **cordova-plugin-bbd-mailto**
- *Installation*: `$ npm install cordova-plugin-bbd-mailto`
+ *Installation*: `$ npm install <path>/BlackBerry_Dynamics_SDK_for_Cordova_<version>/plugins/cordova-plugin-bbd-mailto`
  *Uninstallation*: `$ npm uninstall cordova-plugin-bbd-mailto`
  - **cordova-plugin-bbd-push**
- *Installation*: `$ npm install cordova-plugin-bbd-push`
+ *Installation*: `$ npm install <path>/BlackBerry_Dynamics_SDK_for_Cordova_<version>/plugins/cordova-plugin-bbd-push`
  *Uninstallation*: `$ npm uninstall cordova-plugin-bbd-push`
  - **cordova-plugin-bbd-serversideservices**
- *Installation*: `$ npm install cordova-plugin-bbd-serversideservices`
+ *Installation*: `$ npm install <path>/BlackBerry_Dynamics_SDK_for_Cordova_<version>/plugins/cordova-plugin-bbd-serversideservices`
  *Uninstallation*: `$ npm uninstall cordova-plugin-bbd-serversideservices`
  - **cordova-plugin-bbd-socket**
- *Installation*: `$ npm install cordova-plugin-bbd-socket`
+ *Installation*: `$ npm install <path>/BlackBerry_Dynamics_SDK_for_Cordova_<version>/plugins/cordova-plugin-bbd-socket`
  *Uninstallation*: `$ npm uninstall cordova-plugin-bbd-socket`
  - **cordova-plugin-bbd-specificpolicies**
- *Installation*: `$ npm install cordova-plugin-bbd-specificpolicies`
+ *Installation*: `$ npm install <path>/BlackBerry_Dynamics_SDK_for_Cordova_<version>/plugins/cordova-plugin-bbd-specificpolicies`
  *Uninstallation*: `$ npm uninstall cordova-plugin-bbd-specificpolicies`
  - **cordova-plugin-bbd-storage**
- *Installation*: `$ npm install cordova-plugin-bbd-storage`
+ *Installation*: `$ npm install <path>/BlackBerry_Dynamics_SDK_for_Cordova_<version>/plugins/cordova-plugin-bbd-storage`
  *Uninstallation*: `$ npm uninstall cordova-plugin-bbd-storage`
  - **cordova-plugin-bbd-tokenhelper**
- *Installation*: `$ npm install cordova-plugin-bbd-tokenhelper`
+ *Installation*: `$ npm install <path>/BlackBerry_Dynamics_SDK_for_Cordova_<version>/plugins/cordova-plugin-bbd-tokenhelper`
  *Uninstallation*: `$ npm uninstall cordova-plugin-bbd-tokenhelper`
  - **cordova-plugin-bbd-websocket**
- *Installation*: `$ npm install cordova-plugin-bbd-websocket`
+ *Installation*: `$ npm install <path>/BlackBerry_Dynamics_SDK_for_Cordova_<version>/plugins/cordova-plugin-bbd-websocket`
  *Uninstallation*: `$ npm uninstall cordova-plugin-bbd-websocket`
 
 ## Dynamics Ionic-Capacitor samples

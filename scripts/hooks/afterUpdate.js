@@ -21,8 +21,7 @@
         projectRoot = process.env.INIT_CWD,
         androidProjectRoot = path.join(projectRoot, 'android'),
         iosProjectRoot = path.join(projectRoot, 'ios'),
-        capacitorConfigJson = require(path.join(projectRoot, 'capacitor.config.json')),
-        bundleId = capacitorConfigJson['appId'],
+        bundleId = readBundleIdFromCapacitorConfig(projectRoot),
         isWindows = process.platform === 'win32',
         { getPackageNameFromAndroidManifest, addAttributeToXmlElement, updateLinkerFlags, updateLauncher } = require(
             path.join(projectRoot, 'node_modules', 'capacitor-plugin-bbd-base', 'scripts', 'hooks', 'helper')
@@ -112,6 +111,23 @@
         );
 
         updateLinkerFlags();
+    }
+
+    function readBundleIdFromCapacitorConfig(projectRoot) {
+        const configJson = path.join(projectRoot, 'capacitor.config.json');
+        const configTs = path.join(projectRoot, 'capacitor.config.ts');
+
+        if (fs.existsSync(configJson)) {
+            return require(configJson)['appId'];
+        }
+
+        if (fs.existsSync(configTs)) {
+            const bundleIdRegExp = /appId\: '(([a-zA-Z0-9]+\.)+([a-zA-Z0-9]+))'/;
+            const configTsContent = fs.readFileSync(configTs, 'utf-8');
+            const bundleId = bundleIdRegExp.exec(configTsContent);
+
+            return bundleId ? bundleId[1] : null;
+        }
     }
 
 })();

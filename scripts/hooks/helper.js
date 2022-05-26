@@ -75,7 +75,8 @@ exports.checkAndExitOrContinueOnInstall = () => {
             return !['--save', '--verbose', '--d'].includes(val);
         });
 
-    if (!(filteredOriginal[1] && filteredOriginal[1].indexOf('capacitor-plugin-bbd-base') > -1 &&
+    if (!(filteredOriginal[1] && 
+        (filteredOriginal[1].indexOf('capacitor-plugin-bbd-base') > -1 || filteredOriginal[1].indexOf('capacitor-base') > -1) &&
         (filteredOriginal.includes('i') || filteredOriginal.includes('install') || filteredOriginal.includes('add')))) {
         process.exit(0);
     }
@@ -87,9 +88,27 @@ exports.checkAndExitOrContinueOnUninstall = () => {
             return !['--save', '--verbose', '--d'].includes(val);
         });
 
-    if (!(filteredOriginal[1] && filteredOriginal[1].indexOf('capacitor-plugin-bbd-base') > -1 &&
+    if (!(filteredOriginal[1] && 
+        (filteredOriginal[1].indexOf('capacitor-plugin-bbd-base') > -1 || filteredOriginal[1].indexOf('capacitor-base') > -1) &&
         (filteredOriginal.includes('uninstall') || filteredOriginal.includes('remove')))) {
         process.exit(0);
+    }
+}
+
+exports.readBundleIdFromCapacitorConfig = (projectRoot) => {
+    const configJson = path.join(projectRoot, 'capacitor.config.json');
+    const configTs = path.join(projectRoot, 'capacitor.config.ts');
+
+    if (fs.existsSync(configJson)) {
+        return require(configJson)['appId'];
+    }
+
+    if (fs.existsSync(configTs)) {
+        const bundleIdRegExp = /appId\: '(([a-zA-Z0-9]+\.)+([a-zA-Z0-9]+))'/;
+        const configTsContent = fs.readFileSync(configTs, 'utf-8');
+        const bundleId = bundleIdRegExp.exec(configTsContent);
+
+        return bundleId ? bundleId[1] : null;
     }
 }
 
