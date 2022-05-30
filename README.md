@@ -13,11 +13,11 @@ This repository contains following Cordova plugins separated into branches:
 `capacitor-plugin-bbd-base` plugin adds all needed configurations to be able to use `BlackBerry Dynamics` in your Ionic Capacitor application.
 ### Installation
 ```
-$ cordova plugin add git+https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins#capacitor-base
+$ npm i git+https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins#capacitor-base
 ```
 ### Uninstallation
 ```
-$ cordova plugin rm capacitor-plugin-bbd-base
+$ npm uninstall capacitor-plugin-bbd-base
 ```
 
 ## cordova-plugin-bbd-file
