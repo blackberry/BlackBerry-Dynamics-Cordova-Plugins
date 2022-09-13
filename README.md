@@ -34,7 +34,7 @@ Dynamics SDK for iOS and Android are installed as part of the `capacitor-plugin-
 The integration uses the iOS "Dynamic Framework" version of BlackBerry Dynamics as the static library is no longer supported.
 There are a few options to integrate BlackBerry Dynamics SDK for iOS.
 #### Using latest released version - default
-By default, `capacitor-plugin-bbd-base` plugin will integrate **latest** available BlackBerry Dynamics SDK for iOS using following podspec: `https://software.download.blackberry.com/repository/framework/dynamics/ios/10.2.0.83/BlackBerryDynamics-10.2.0.83.podspec`.
+By default, `capacitor-plugin-bbd-base` plugin will integrate **latest** available BlackBerry Dynamics SDK for iOS using following podspec: `https://software.download.blackberry.com/repository/framework/dynamics/ios/11.0.0.116/BlackBerryDynamics-11.0.0.116.podspec`.
 > NOTE: If one of the below integration methods was used there is an option to reset **default** configuration by running following command:
 `$ npx set-dynamics-podspec --default`
 `$ ionic cap build ios`
@@ -43,7 +43,7 @@ By default, `capacitor-plugin-bbd-base` plugin will integrate **latest** availab
 There is possibility to integrate other released build of BlackBerry Dynamics SDK for iOS.
 Following command should be run:
 ```
-$ npx set-dynamics-podspec --url "https://software.download.blackberry.com/repository/framework/dynamics/ios/10.1.0.36/BlackBerryDynamics-10.1.0.36.podspec"
+$ npx set-dynamics-podspec --url "https://software.download.blackberry.com/repository/framework/dynamics/ios/10.2.0.83/BlackBerryDynamics-10.2.0.83.podspec"
 $ ionic cap build ios
 ```
 #### Using locally downloaded version

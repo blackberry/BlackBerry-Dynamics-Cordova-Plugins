@@ -23,7 +23,7 @@
    const { dynamicsPodSpec } = require(path.join(bbdBasePath, 'package.json'));
    const pattern = /pod 'BlackBerryDynamics', (:podspec|:path) => '(.+)'/;
 
-   const parce = (arg, options = { value: null }) => {
+   const parse = (arg, options = { value: null }) => {
       const argument = {
          index: null,
          value: null
@@ -46,9 +46,9 @@
    }
 
    const pod = {
-      path: parce('--path'),
-      url: parce('--url'),
-      default: parce('--default', { value: true })
+      path: parse('--path'),
+      url: parse('--url'),
+      default: parse('--default', { value: true })
    }
 
    let spec;

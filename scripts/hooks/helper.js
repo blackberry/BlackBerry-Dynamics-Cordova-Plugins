@@ -41,8 +41,6 @@ const linkerFlags = {
 };
 
 const podsPhrases = {
-    BlackBerryDynamics: "pod 'BlackBerryDynamics', :podspec => " +
-        "'https://software.download.blackberry.com/repository/framework/dynamics/ios/10.2.0.83/BlackBerryDynamics-10.2.0.83.podspec'",
     BlackBerryLauncher: "pod 'BlackBerryLauncher', :path => '../../node_modules/cordova-plugin-bbd-launcher'",
 };
 
@@ -136,14 +134,17 @@ exports.updateLauncher = () => {
     const podFilePath = path.join(projectRoot, 'ios', 'App', 'Podfile');
 
     if ('cordova-plugin-bbd-launcher' in packageJson.dependencies) {
-        let fileContext = fs.readFileSync(podFilePath);
-        if (fileContext.includes(podsPhrases.BlackBerryLauncher))
+        let fileContext = fs.readFileSync(podFilePath).toString();
+        if (fileContext.includes(podsPhrases.BlackBerryLauncher)) {
             return;
+        }
+
+        podsPhrases.BlackBerryDynamics = getBlackBerryDynamicsPodPhrase(fileContext);
 
         replaceAndSave(podFilePath, [
             [
                 podsPhrases.BlackBerryDynamics,
-                `${podsPhrases.BlackBerryDynamics}\n\t${podsPhrases.BlackBerryLauncher}`
+                addAfter(podsPhrases.BlackBerryDynamics, podsPhrases.BlackBerryLauncher)
             ]
         ]);
     } else {
@@ -169,13 +170,53 @@ exports.cleanUpCAPBridgeViewController = () => {
     ]);
 }
 
+const targetVersion = '14.0';
+const requireHelperPhrase = "require_relative '../../node_modules/" +
+    "capacitor-plugin-bbd-base/scripts/hooks/ios/update_deployment_target.rb'" +
+    "\n";
+const postInstallPhrase = [
+    `post_install do |installer|`,
+    `   project = Xcodeproj::Project.open('App.xcodeproj')`,
+    `   update_deployment_target project, ${targetVersion}`,
+    `   project.save`,
+    ``,
+    `   update_deployment_target installer.pods_project, ${targetVersion}`,
+    `end`
+].join("\n");
+const assertDeploymentTargetReplacePhrase = [
+    `post_install do |installer|`,
+    `  assertDeploymentTarget(installer)`,
+    `end`
+].join("\n");
+
+exports.addAssertDeploymentTarget = (capacitorPodFile) => {
+    let podFileContent = fse.readFileSync(
+        capacitorPodFile,
+        { encoding: "utf-8" }
+    ).toString();
+
+    if (podFileContent.includes("assertDeploymentTarget(installer)")) {
+        podFileContent = podFileContent.replace(assertDeploymentTargetReplacePhrase, "");
+    }
+
+    podFileContent = requireHelperPhrase + podFileContent + postInstallPhrase;
+    fse.writeFileSync(capacitorPodFile, podFileContent);
+}
+
+exports.removeAssertDeploymentTarget = (capacitorPodFile) => {
+    replaceAndSave(capacitorPodFile, [
+        [requireHelperPhrase, ""],
+        [postInstallPhrase, assertDeploymentTargetReplacePhrase]
+    ]);
+}
+
 function replaceAndSave(filePath, collection) {
     if (!fs.existsSync(filePath)) {
         throw new Error(`File not exists at path ${filePath}`)
     }
     const encoding = { encoding: 'utf8' };
 
-    let fileContext = fs.readFileSync(filePath, encoding);
+    let fileContext = fs.readFileSync(filePath, encoding).toString();
 
     for (const [search, replace] of collection) {
         fileContext = fileContext.replace(search, replace);
@@ -200,6 +241,15 @@ function addLinkerForBuildType(buildType, linker) {
             ['-framework "BlackBerryDynamics" ', '-framework "BlackBerryDynamics" ' + linker]
         ]);
     }
+}
+
+function getBlackBerryDynamicsPodPhrase(context) {
+    const [match] = context.match(/pod 'BlackBerryDynamics', (:podspec|:path) => '(.+)'/);
+    return match;
+}
+
+function addAfter(phrase, newPhrase) {
+    return `${phrase}\n\t${newPhrase}`
 }
 
 exports.replaceAndSave = replaceAndSave;

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-(function () {
-    const { checkAndExitOrContinueOnUninstall, replaceAndSave } = require('./helper');
+ (function () {
+    const { checkAndExitOrContinueOnUninstall, replaceAndSave, removeAssertDeploymentTarget } = require('./helper');
 
     // We should run this script only if we uninstall capacitor-plugin-bbd-base plugin.
     // In other circumstances like 'npm i' or 'yarn' or 'npm uninstall' or 'npm i <other_module>' we should exit.
@@ -152,7 +152,7 @@
                 ]
             ]);
             replaceAndSave(capacitorPodFilePath, [
-                [`platform :ios, '14.0'`, `platform :ios, '12.0'`],
+                [`platform :ios, '14.0'`, `platform :ios, '13.0'`],
                 [/pod 'BlackBerryDynamics', (:podspec|:path) => '(.+)'/, '']
             ]);
             replaceAndSave(capacitorPodSpecFile, [
@@ -164,6 +164,7 @@
             replaceAndSave(capacitorCLIPodsSpecPath, [
                 [`s.dependency 'BlackBerryDynamics'`, '']
             ]);
+            removeAssertDeploymentTarget(capacitorPodFilePath);
         } catch (error) {
             console.log(error);
         }
