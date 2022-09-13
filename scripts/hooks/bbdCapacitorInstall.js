@@ -14,8 +14,13 @@
  * limitations under the License.
  */
 
-(function () {
-    const { checkAndExitOrContinueOnInstall, patchCAPBridgeViewController, replaceAndSave } = require('./helper');
+ (function () {
+    const {
+        checkAndExitOrContinueOnInstall,
+        patchCAPBridgeViewController,
+        replaceAndSave,
+        addAssertDeploymentTarget
+    } = require('./helper');
 
     // We should run this script only if we install capacitor-plugin-bbd-base plugin.
     // In other circumstances like 'npm i' or 'yarn' or 'npm uninstall' or 'npm i <other_module>' we should exit.
@@ -64,8 +69,7 @@
             capacitorPodFile = path.join(projectRoot, 'ios', 'App', 'Podfile'),
             BlackBerryDependencyPhrase = `s.dependency 'BlackBerryDynamics'`,
             SwiftVersionPhrase = `s.swift_version  = '5.1'`,
-            addYourPodsHerePhrase = '# Add your Pods here',
-            platformVersion = version => `platform :ios, '${version}'`;
+            addYourPodsHerePhrase = '# Add your Pods here';
 
         if (!fse.existsSync(cordovaPluginsPodsSpecPath)) {
             console.log('File not found at path: ', cordovaPluginsPodsSpecPath);
@@ -94,12 +98,14 @@
         const podsSpecPhrase = `pod 'BlackBerryDynamics', :podspec => '${dynamicsPodSpec}'`;
 
         replaceAndSave(capacitorPodFile, [
-            [platformVersion('12.0'), platformVersion('14.0')],
+            [/platform :ios, \'([\d\.\d]+)\'/, "platform :ios, '14.0'"],
             [
                 addYourPodsHerePhrase,
                 `${addYourPodsHerePhrase}\n\t${podsSpecPhrase}`
             ]
         ]);
+
+        addAssertDeploymentTarget(capacitorPodFile);
 
         // add dependency to Capacitor pod file
         const capacitorPodSpecFile = path.join(projectRoot, 'node_modules', '@capacitor', 'ios', 'Capacitor.podspec');
