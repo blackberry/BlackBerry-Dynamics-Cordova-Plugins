@@ -15,7 +15,12 @@
  */
 
  (function () {
-    const { checkAndExitOrContinueOnUninstall, replaceAndSave, removeAssertDeploymentTarget } = require('./helper');
+    const {
+        checkAndExitOrContinueOnUninstall,
+        replaceAndSave,
+        removeAssertDeploymentTarget,
+        readBundleIdFromCapacitorConfig
+    } = require('./helper');
 
     // We should run this script only if we uninstall capacitor-plugin-bbd-base plugin.
     // In other circumstances like 'npm i' or 'yarn' or 'npm uninstall' or 'npm i <other_module>' we should exit.
@@ -31,8 +36,7 @@
         androidProjectRoot = path.join(projectRoot, 'android'),
         iosProjectRoot = path.join(projectRoot, 'ios'),
         packageJsonObj = require(path.join(projectRoot, 'package.json')),
-        capacitorConfigJson = require(path.join(projectRoot, 'capacitor.config.json')),
-        bundleId = capacitorConfigJson['appId'],
+        bundleId = readBundleIdFromCapacitorConfig(projectRoot),
         { getPackageNameFromAndroidManifest, cleanUpCAPBridgeViewController } = require('./helper');
 
     // Remove integration hook from package.json
