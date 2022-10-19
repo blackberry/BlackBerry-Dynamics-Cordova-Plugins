@@ -42,7 +42,7 @@ const linkerFlags = {
 
 const podsPhrases = {
     BlackBerryDynamics: "pod 'BlackBerryDynamics', :podspec => " +
-        "'https://software.download.blackberry.com/repository/framework/dynamics/ios/10.2.0.83/BlackBerryDynamics-10.2.0.83.podspec'",
+        "'https://software.download.blackberry.com/repository/framework/dynamics/ios/11.0.1.137/BlackBerryDynamics-11.0.1.137.podspec'",
     BlackBerryLauncher: "pod 'BlackBerryLauncher', :path => '../../node_modules/cordova-plugin-bbd-launcher'",
 };
 
