@@ -25,7 +25,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        id="capacitor-plugin-bbd-base" version="1.0.0">
+        id="capacitor-plugin-bbd-base" version="1.1.0">
     <name>BlackBerry Dynamics Capacitor Base plugin</name>
     <description>
         This is Base plugin. It adds all the needed configuration to enable using
