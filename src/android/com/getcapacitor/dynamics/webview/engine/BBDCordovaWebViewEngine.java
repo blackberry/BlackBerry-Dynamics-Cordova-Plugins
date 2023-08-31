@@ -1,5 +1,5 @@
 /*
-       Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
+       Copyright (c) 2023 BlackBerry Limited. All Rights Reserved.
 
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
@@ -19,7 +19,7 @@
        under the License.
  */
 
-package com.good.gd.cordova.core.webview.engine;
+package com.getcapacitor.core.webview.engine;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -46,10 +46,10 @@ import android.webkit.WebView;
 import androidx.annotation.RequiresApi;
 import androidx.webkit.WebViewAssetLoader;
 
-import com.good.gd.cordova.capacitor.Bridge;
-import com.good.gd.cordova.capacitor.WebViewListener;
+import com.getcapacitor.Bridge;
+import com.getcapacitor.WebViewListener;
 import com.good.gd.cordova.core.mailto.MailToInterceptor;
-import com.good.gd.cordova.capacitor.WebViewLocalServer;
+import com.getcapacitor.WebViewLocalServer;
 import com.blackberry.bbwebview.BBWebViewClient;
 
 import org.apache.cordova.ConfigXmlParser;
@@ -69,7 +69,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import static com.good.gd.apachehttp.entity.ContentType.TEXT_HTML;
 
 public class BBDCordovaWebViewEngine implements CordovaWebViewEngine {
@@ -202,12 +201,6 @@ public class BBDCordovaWebViewEngine implements CordovaWebViewEngine {
 
         // Enable built-in geolocation
         settings.setGeolocationEnabled(true);
-
-        // Enable AppCache
-        // Fix for CB-2282
-        settings.setAppCacheMaxSize(5 * 1048576);
-        settings.setAppCachePath(databasePath);
-        settings.setAppCacheEnabled(true);
 
         // enabling "http://" scheme after moving form "file://android_asset/" to "https://appassets.androidplatform.net/assets"
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
@@ -516,12 +509,6 @@ public class BBDCordovaWebViewEngine implements CordovaWebViewEngine {
         @Override
         public void onReceivedError(WebView webView,  WebResourceRequest request,  WebResourceError error) {
             Log.i(TAG, "onReceivedError " + request.getUrl() + " code: " + error.getErrorCode() + " desc: " + error.getDescription());
-            List<WebViewListener> webViewListeners = bridge.getWebViewListeners();
-            if (webViewListeners != null) {
-              for (WebViewListener listener : bridge.getWebViewListeners()) {
-                listener.onReceivedError(webView);
-              }
-            }
         }
     }
 

@@ -1,5 +1,5 @@
 /*
-       Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
+       Copyright (c) 2023 BlackBerry Limited. All Rights Reserved.
 
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
@@ -19,7 +19,7 @@
        under the License.
  */
 
-package com.good.gd.cordova.core;
+package com.getcapacitor.core;
 
 import android.app.Application;
 

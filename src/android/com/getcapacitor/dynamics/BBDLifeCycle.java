@@ -1,5 +1,5 @@
 /*
-       Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
+       Copyright (c) 2023 BlackBerry Limited. All Rights Reserved.
 
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
@@ -19,7 +19,7 @@
        under the License.
  */
 
-package com.good.gd.cordova.core;
+package com.getcapacitor.core;
 
 import android.app.Activity;
 import android.app.Application;
@@ -32,12 +32,11 @@ import android.util.Log;
 
 import com.good.gd.GDAndroid;
 import com.good.gd.GDStateAction;
-import com.good.gd.cordova.capacitor.BridgeActivity;
 import com.good.gd.cordova.core.launcher.BBDLauncherInterfaceProvider;
-import com.good.gd.cordova.core.launcher.BBDLauncherManager;
+import com.getcapacitor.BridgeActivity;
 import com.good.gd.cordova.core.utils.AppUtils;
 import com.good.gd.cordova.plugins.helpers.CordovaGDServiceHelper;
-
+import com.good.gd.cordova.core.launcher.BBDLauncherManager;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
+ * Copyright (c) 2023 BlackBerry Limited. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,20 @@
  * limitations under the License.
  */
 
+import path from 'path';
+import fs from 'fs';
+import { updateLauncher } from '../node_modules/capacitor-plugin-bbd-base/scripts/hooks/helper.js';
+
+const projectRoot = process.env.INIT_CWD,
+    iosProjectRoot = path.join(projectRoot, 'ios'),
+    isWindows = process.platform === 'win32',
+    currentPlatformName = process.env.CAPACITOR_PLATFORM_NAME;
+
 (function () {
-    const path = require('path'),
-        fs = require('fs'),
-        projectRoot = process.env.INIT_CWD,
-        iosProjectRoot = path.join(projectRoot, 'ios'),
-        isWindows = process.platform === 'win32',
-        { updateLauncher } = require(
-            path.join(projectRoot, 'node_modules', 'capacitor-plugin-bbd-base', 'scripts', 'hooks', 'helper')
-        ),
-        currentPlatformName = process.env.CAPACITOR_PLATFORM_NAME;
-
-
     // Configure Launcher for iOS platform
     if (fs.existsSync(iosProjectRoot) && currentPlatformName == 'ios') {
         if (isWindows) { return; }
 
         updateLauncher();
     }
-
 })();
