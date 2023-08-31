@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
+ * Copyright (c) 2023 BlackBerry Limited. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 #import <BlackBerryDynamics/GD/GDState.h>
 #import <BlackBerryDynamics/GD/GDiOS.h>
 #import "BbdCapacitorRuntime.h"
+#import "GDCBasePlugin.h"
 
 #import <objc/runtime.h>
 
@@ -160,6 +161,10 @@ bool bbd_applicationDidFinishlaunchingWithOptions(id self, SEL cmd, UIApplicatio
     objc_setAssociatedObject(application, "_bbd_cap_notification_receiver", notificationHandler, OBJC_ASSOCIATION_RETAIN);
 
     [[GDiOS sharedInstance] authorize];
+
+    // replace openURL and openURL:options:completionHandler with openURLReplacement:options:completionHandler:
+    // the last is used as an antry point to handle mailto: scheme
+    [GDCBasePlugin replaceOpenUrlMethod];
 
     return YES;
 }

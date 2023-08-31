@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
+ * Copyright (c) 2023 BlackBerry Limited. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,103 +14,47 @@
  * limitations under the License.
  */
 
-const fs = require('fs'),
-    path = require('path'),
-    fse = require('fs-extra'),
-    projectRoot = process.env.INIT_CWD,
-    packageJson = require(path.join(projectRoot, 'package.json'));
+import path from 'path';
+import fs from 'fs';
+import {
+    registerGDStateChangeHandler,
+    notificationCenter,
+    requireHelperPhrase,
+    postInstallPhrase,
+    assertDeploymentTargetReplacePhrase,
+    headers,
+    linkerFlags,
+    loadWebView,
+    blackBerryLauncherPodPhrase
+} from './constants.js';
+
+const projectRoot = process.env.INIT_CWD,
+    packageJson = JSON.parse(fs.readFileSync(path.join(projectRoot, 'package.json'), 'utf-8'));
 
 const cAPBridgeViewControllerPath = path.join(
     projectRoot, 'node_modules', '@capacitor', 'ios', 'Capacitor', 'Capacitor', 'CAPBridgeViewController.swift'
 );
 
-const linkerFlags = {
-    application: '-framework "BbdApplicationPlugin" ',
-    appkinetics: '-framework "BbdAppKineticsPlugin" ',
-    httprequest: '-framework "BbdHttpRequestPlugin" ',
-    interappcommunication: '-framework "BbdInterAppCommunicationPlugin" ',
-    mailto: '-framework "BbdMailToPlugin" ',
-    push: '-framework "BbdPushPlugin" ',
-    serversideservices: '-framework "BbdServerSideServicesPlugin" ',
-    socket: '-framework "BbdSocketPlugin" ',
-    specificpolicies: '-framework "BbdSpecificPoliciesPlugin" ',
-    storage: '-framework "BbdStoragePlugin" ',
-    tokenhelper: '-framework "BbdTokenHelperPlugin" ',
-    websocket: '-framework "BbdWebSocketPlugin" ',
-    launcher: '-framework "BbdLauncherPlugin" '
-};
-
 const podsPhrases = {
-    BlackBerryLauncher: "pod 'BlackBerryLauncher', :path => '../../node_modules/cordova-plugin-bbd-launcher'",
+    BlackBerryLauncher: blackBerryLauncherPodPhrase,
 };
 
-const headers = {
-    BlackBerry: `import BlackBerryDynamics.Runtime`,
-    Cordova: `import Cordova`
-};
-
-const loadWebView = `loadWebView()`;
-const notificationCenter = `NotificationCenter.default.addObserver(self, selector: #selector(registerGDStateChangeHandler(notification:)), name: NSNotification.Name.GDStateChange, object: nil)`;
-
-const registerGDStateChangeHandler = [
-    `@objc func registerGDStateChangeHandler(notification: NSNotification) {`,
-    `        if (notification.name == NSNotification.Name.GDStateChange)`,
-    `        {`,
-    `            let userInfo: NSDictionary = notification.userInfo! as NSDictionary`,
-    `            let propertyName = userInfo[GDStateChangeKeyProperty]`,
-    ``,
-    `            if (propertyName as! String == GDKeyIsAuthorized)`,
-    `            {`,
-    `                loadWebView()`,
-    `            }`,
-    `        }`,
-    `    }`
-];
-
-exports.checkAndExitOrContinueOnInstall = () => {
-    const originalNpmConfigArgv = JSON.parse(process.env.npm_config_argv).original,
-        filteredOriginal = originalNpmConfigArgv.filter(function (val, i) {
-            return !['--save', '--verbose', '--d'].includes(val);
-        });
-
-    if (!(filteredOriginal[1] && 
-        (filteredOriginal[1].indexOf('capacitor-plugin-bbd-base') > -1 || filteredOriginal[1].indexOf('capacitor-base') > -1) &&
-        (filteredOriginal.includes('i') || filteredOriginal.includes('install') || filteredOriginal.includes('add')))) {
+export const checkAndExitOrContinueOnInstall = () => {
+    const processArgv = process.argv;
+    if (!(processArgv[1] && processArgv[1].indexOf('capacitor-plugin-bbd-base') > -1 &&
+        process.env.npm_command === 'install')) {
+        process.exit(0);
+    }
+}
+export const checkAndExitOrContinueOnUninstall = () => {
+    const processArgv = process.argv;
+    if (!(processArgv[1] && processArgv[1].indexOf('capacitor-plugin-bbd-base') > -1 &&
+        process.env.npm_command === 'uninstall')) {
         process.exit(0);
     }
 }
 
-exports.checkAndExitOrContinueOnUninstall = () => {
-    const originalNpmConfigArgv = JSON.parse(process.env.npm_config_argv).original,
-        filteredOriginal = originalNpmConfigArgv.filter(function (val, i) {
-            return !['--save', '--verbose', '--d'].includes(val);
-        });
-
-    if (!(filteredOriginal[1] && 
-        (filteredOriginal[1].indexOf('capacitor-plugin-bbd-base') > -1 || filteredOriginal[1].indexOf('capacitor-base') > -1) &&
-        (filteredOriginal.includes('uninstall') || filteredOriginal.includes('remove')))) {
-        process.exit(0);
-    }
-}
-
-exports.readBundleIdFromCapacitorConfig = (projectRoot) => {
-    const configJson = path.join(projectRoot, 'capacitor.config.json');
-    const configTs = path.join(projectRoot, 'capacitor.config.ts');
-
-    if (fs.existsSync(configJson)) {
-        return require(configJson)['appId'];
-    }
-
-    if (fs.existsSync(configTs)) {
-        const bundleIdRegExp = /appId\: '(([a-zA-Z0-9]+\.)+([a-zA-Z0-9]+))'/;
-        const configTsContent = fs.readFileSync(configTs, 'utf-8');
-        const bundleId = bundleIdRegExp.exec(configTsContent);
-
-        return bundleId ? bundleId[1] : null;
-    }
-}
-
-exports.getPackageNameFromAndroidManifest = (pathToAndroidManifest) => {
+export const getPackageNameFromAndroidManifest = (pathToAndroidManifest) => {
     const androidManifestContent = fs.readFileSync(pathToAndroidManifest, 'utf-8'),
         startIndexOfPackageString = androidManifestContent.indexOf(
             '"', androidManifestContent.indexOf('package=')
@@ -120,7 +64,7 @@ exports.getPackageNameFromAndroidManifest = (pathToAndroidManifest) => {
     return androidManifestContent.substring(startIndexOfPackageString, endIndexOfPackageString);
 }
 
-exports.addAttributeToXmlElement = (element, attributeToAdd, xml) => {
+export const addAttributeToXmlElement = (element, attributeToAdd, xml) => {
     if (!xml.includes(attributeToAdd)) {
         const startIndexOfElementTag = xml.indexOf('<' + element),
             endIndexOfElementStartLine = xml.indexOf('\n', startIndexOfElementTag),
@@ -140,7 +84,7 @@ exports.addAttributeToXmlElement = (element, attributeToAdd, xml) => {
     return xml;
 }
 
-exports.updateLinkerFlags = () => {
+export const updateLinkerFlags = () => {
     for (const [key, value] of Object.entries(linkerFlags)) {
         if (('cordova-plugin-bbd-' + key) in packageJson.dependencies) {
             addLinkerForBuildType('debug', value);
@@ -149,16 +93,16 @@ exports.updateLinkerFlags = () => {
     }
 }
 
-exports.updateLauncher = () => {
+export const updateLauncher = () => {
     const podFilePath = path.join(projectRoot, 'ios', 'App', 'Podfile');
 
     if ('cordova-plugin-bbd-launcher' in packageJson.dependencies) {
-        let fileContext = fs.readFileSync(podFilePath).toString();
-        if (fileContext.includes(podsPhrases.BlackBerryLauncher)) {
+        let fileContent = fs.readFileSync(podFilePath, 'utf-8');
+        if (fileContent.includes(podsPhrases.BlackBerryLauncher)) {
             return;
         }
 
-        podsPhrases.BlackBerryDynamics = getBlackBerryDynamicsPodPhrase(fileContext);
+        podsPhrases.BlackBerryDynamics = getBlackBerryDynamicsPodPhrase(fileContent);
 
         replaceAndSave(podFilePath, [
             [
@@ -173,7 +117,7 @@ exports.updateLauncher = () => {
     }
 }
 
-exports.patchCAPBridgeViewController = () => {
+export const patchCAPBridgeViewController = () => {
     replaceAndSave(cAPBridgeViewControllerPath, [
         [headers.Cordova, `${headers.Cordova}\n${headers.BlackBerry}`],
         [loadWebView, notificationCenter],
@@ -181,7 +125,7 @@ exports.patchCAPBridgeViewController = () => {
     ]);
 }
 
-exports.cleanUpCAPBridgeViewController = () => {
+export const cleanUpCAPBridgeViewController = () => {
     replaceAndSave(cAPBridgeViewControllerPath, [
         [`${headers.Cordova}\n${headers.BlackBerry}`, headers.Cordova],
         [notificationCenter, loadWebView,],
@@ -189,27 +133,8 @@ exports.cleanUpCAPBridgeViewController = () => {
     ]);
 }
 
-const targetVersion = '14.0';
-const requireHelperPhrase = "require_relative '../../node_modules/" +
-    "capacitor-plugin-bbd-base/scripts/hooks/ios/update_deployment_target.rb'" +
-    "\n";
-const postInstallPhrase = [
-    `post_install do |installer|`,
-    `   project = Xcodeproj::Project.open('App.xcodeproj')`,
-    `   update_deployment_target project, ${targetVersion}`,
-    `   project.save`,
-    ``,
-    `   update_deployment_target installer.pods_project, ${targetVersion}`,
-    `end`
-].join("\n");
-const assertDeploymentTargetReplacePhrase = [
-    `post_install do |installer|`,
-    `  assertDeploymentTarget(installer)`,
-    `end`
-].join("\n");
-
-exports.addAssertDeploymentTarget = (capacitorPodFile) => {
-    let podFileContent = fse.readFileSync(
+export const addAssertDeploymentTarget = (capacitorPodFile) => {
+    let podFileContent = fs.readFileSync(
         capacitorPodFile,
         { encoding: "utf-8" }
     ).toString();
@@ -218,30 +143,34 @@ exports.addAssertDeploymentTarget = (capacitorPodFile) => {
         podFileContent = podFileContent.replace(assertDeploymentTargetReplacePhrase, "");
     }
 
-    podFileContent = requireHelperPhrase + podFileContent + postInstallPhrase;
-    fse.writeFileSync(capacitorPodFile, podFileContent);
+    if (!podFileContent.includes(requireHelperPhrase) && !podFileContent.includes(postInstallPhrase)) {
+        podFileContent = requireHelperPhrase + podFileContent + postInstallPhrase;
+        fs.writeFileSync(capacitorPodFile, podFileContent, 'utf-8');
+    }
 }
 
-exports.removeAssertDeploymentTarget = (capacitorPodFile) => {
+export const removeAssertDeploymentTarget = (capacitorPodFile) => {
     replaceAndSave(capacitorPodFile, [
         [requireHelperPhrase, ""],
         [postInstallPhrase, assertDeploymentTargetReplacePhrase]
     ]);
 }
 
-function replaceAndSave(filePath, collection) {
+export const replaceAndSave = (filePath, collection, { replacementTextToCheck = '', revert = false } = {}) => {
     if (!fs.existsSync(filePath)) {
         throw new Error(`File not exists at path ${filePath}`)
     }
     const encoding = { encoding: 'utf8' };
 
-    let fileContext = fs.readFileSync(filePath, encoding).toString();
+    let fileContent = fs.readFileSync(filePath, encoding);
 
-    for (const [search, replace] of collection) {
-        fileContext = fileContext.replace(search, replace);
+    if (!replacementTextToCheck || replacementTextToCheck && !fileContent.includes(replacementTextToCheck) || revert ) {
+        for (const [target, replacement] of collection) {
+            fileContent = revert ? fileContent.replace(replacement, target) : fileContent.replace(target, replacement);
+        }
+
+        fs.writeFileSync(filePath, fileContent, encoding);
     }
-
-    fs.writeFileSync(filePath, fileContext, encoding);
 }
 
 function addLinkerForBuildType(buildType, linker) {
@@ -255,7 +184,7 @@ function addLinkerForBuildType(buildType, linker) {
         'Pods-App.' + buildType + '.xcconfig'
     );
 
-    if (fse.existsSync(xcconfigPath)) {
+    if (fs.existsSync(xcconfigPath)) {
         replaceAndSave(xcconfigPath, [
             ['-framework "BlackBerryDynamics" ', '-framework "BlackBerryDynamics" ' + linker]
         ]);
@@ -270,5 +199,3 @@ function getBlackBerryDynamicsPodPhrase(context) {
 function addAfter(phrase, newPhrase) {
     return `${phrase}\n\t${newPhrase}`
 }
-
-exports.replaceAndSave = replaceAndSave;

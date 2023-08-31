@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
+ * Copyright (c) 2023 BlackBerry Limited. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,12 @@
  * limitations under the License.
  */
 
+import path from 'path';
+import fs from 'fs';
+
 (function(argv) {
-   const path = require('path');
-   const fse = require('fs-extra');
    const bbdBasePath = path.resolve('node_modules', 'capacitor-plugin-bbd-base');
-   const { dynamicsPodSpec } = require(path.join(bbdBasePath, 'package.json'));
+   const { dynamicsPodSpec } = JSON.parse(fs.readFileSync(path.join(bbdBasePath, 'package.json'), 'utf-8'));
    const pattern = /pod 'BlackBerryDynamics', (:podspec|:path) => '(.+)'/;
 
    const parse = (arg, options = { value: null }) => {
@@ -39,10 +40,10 @@
 
    const copyPodspecFile = (_path) => {
       const specPath = path.join(_path, 'BlackBerryDynamics.podspec');
-      if (fse.existsSync(specPath))
+      if (fs.existsSync(specPath))
          return;
       const pathToInnerSpec = path.join(bbdBasePath, 'scripts', 'hooks', 'ios', 'BlackBerryDynamics.podspec');
-      fse.copyFileSync(pathToInnerSpec, specPath);
+      fs.cpSync(pathToInnerSpec, specPath);
    }
 
    const pod = {
@@ -66,10 +67,10 @@
    }
 
    const rootPodFilePath = path.resolve('ios', 'App', 'Podfile');
-   let rootPodFileContext = fse.readFileSync(rootPodFilePath, { encoding: 'utf-8' });
+   let rootPodFileContext = fs.readFileSync(rootPodFilePath, { encoding: 'utf-8' });
    rootPodFileContext = rootPodFileContext.replace(pattern, spec);
 
-   fse.writeFileSync(rootPodFilePath, rootPodFileContext, { encoding: 'utf-8' });
+   fs.writeFileSync(rootPodFilePath, rootPodFileContext, { encoding: 'utf-8' });
 
    console.log('\x1b[32m%s\x1b[0m', 'BlackBerryDynamics podspec in Podfile was successfully updated.');
 })(process.argv);

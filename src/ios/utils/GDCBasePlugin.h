@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
+ * Copyright (c) 2023 BlackBerry Limited. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
 @property (nonatomic, copy) NSString *callbackID;
 
 +(void)registerPlugin:(NSObject *)plugin;
++(void) replaceOpenUrlMethod;
 
 -(void) writePluginResultForId:(NSString*)acallbackID asDictionary:(NSDictionary*)dictionary isError:(BOOL)isError asKeepAlive:(BOOL)keepAlive;
 -(void) writePluginResultForId:(NSString*)acallbackID asDictionary:(NSDictionary*)dictionary isError:(BOOL)isError;
