@@ -1,5 +1,5 @@
 /*
-       Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
+       Copyright (c) 2023 BlackBerry Limited. All Rights Reserved.
        Some modifications to the original Cordova Media Capture plugin
        from https://github.com/apache/cordova-plugin-media-capture
 
@@ -30,6 +30,7 @@ import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import android.content.ActivityNotFoundException;
@@ -83,6 +84,19 @@ public class BBDCapture extends CordovaPlugin {
     private static final int CAPTURE_NO_MEDIA_FILES = 3;
     private static final int CAPTURE_PERMISSION_DENIED = 4;
     private static final int CAPTURE_NOT_SUPPORTED = 20;
+
+    private static String[] storagePermissions;
+    static {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            storagePermissions = new String[]{
+            };
+        } else {
+            storagePermissions = new String[] {
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            };
+        }
+    }
 
     private boolean cameraPermissionInManifest;     // Whether or not the CAMERA permission is declared in AndroidManifest.xml
 
@@ -225,6 +239,41 @@ public class BBDCapture extends CordovaPlugin {
         return obj;
     }
 
+    private boolean isMissingPermissions(Request req, ArrayList<String> permissions) {
+        ArrayList<String> missingPermissions = new ArrayList<>();
+        for (String permission: permissions) {
+            if (!PermissionHelper.hasPermission(this, permission)) {
+                missingPermissions.add(permission);
+            }
+        }
+
+        boolean isMissingPermissions = missingPermissions.size() > 0;
+        if (isMissingPermissions) {
+            String[] missing = missingPermissions.toArray(new String[missingPermissions.size()]);
+            PermissionHelper.requestPermissions(this, req.requestCode, missing);
+        }
+        return isMissingPermissions;
+    }
+
+    private boolean isMissingPermissions(Request req, String mediaPermission) {
+        ArrayList<String> permissions = new ArrayList<>(Arrays.asList(storagePermissions));
+        if (mediaPermission != null && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissions.add(mediaPermission);
+        }
+        return isMissingPermissions(req, permissions);
+    }
+
+    private boolean isMissingCameraPermissions(Request req, String mediaPermission) {
+        ArrayList<String> cameraPermissions = new ArrayList<>(Arrays.asList(storagePermissions));
+        if (cameraPermissionInManifest) {
+            cameraPermissions.add(Manifest.permission.CAMERA);
+        }
+        if (mediaPermission != null && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            cameraPermissions.add(mediaPermission);
+        }
+        return isMissingPermissions(req, cameraPermissions);
+    }
+
     /**
      * Sets up an intent to capture audio.  Result handled by onActivityResult()
      */
@@ -277,35 +326,21 @@ public class BBDCapture extends CordovaPlugin {
      * Sets up an intent to capture images.  Result handled by onActivityResult()
      */
     private void captureImage(Request req) {
-        boolean needExternalStoragePermission =
-            !PermissionHelper.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (isMissingCameraPermissions(req, Manifest.permission.READ_MEDIA_IMAGES)) return;
 
-        boolean needCameraPermission = cameraPermissionInManifest &&
-            !PermissionHelper.hasPermission(this, Manifest.permission.CAMERA);
+        // Save the number of images currently on disk for later
+        this.numPics = queryImgDB(whichContentStore()).getCount();
 
-        if (needExternalStoragePermission || needCameraPermission) {
-            if (needExternalStoragePermission && needCameraPermission) {
-                PermissionHelper.requestPermissions(this, req.requestCode, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA});
-            } else if (needExternalStoragePermission) {
-                PermissionHelper.requestPermission(this, req.requestCode, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            } else {
-                PermissionHelper.requestPermission(this, req.requestCode, Manifest.permission.CAMERA);
-            }
-        } else {
-            // Save the number of images currently on disk for later
-            this.numPics = queryImgDB(whichContentStore()).getCount();
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 
-            Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        ContentResolver contentResolver = this.cordova.getContext().getContentResolver();
+        ContentValues cv = new ContentValues();
+        cv.put(MediaStore.Images.Media.MIME_TYPE, IMAGE_JPEG);
+        imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cv);
 
-            ContentResolver contentResolver = this.cordova.getContext().getContentResolver();
-            ContentValues cv = new ContentValues();
-            cv.put(MediaStore.Images.Media.MIME_TYPE, IMAGE_JPEG);
-            imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cv);
+        intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, imageUri);
 
-            intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, imageUri);
-
-            this.cordova.startActivityForResult((CordovaPlugin) this, intent, req.requestCode);
-        }
+        this.cordova.startActivityForResult((CordovaPlugin) this, intent, req.requestCode);
     }
 
     private static void createWritableFile(File file) throws IOException {

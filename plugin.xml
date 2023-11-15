@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
+  Copyright (c) 2023 BlackBerry Limited. All Rights Reserved.
   Some modifications to the original cordova-plugin-file
   from https://github.com/apache/cordova-plugin-media-capture
 
@@ -88,10 +88,11 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
+	        <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
             <uses-permission android:name="android.permission.RECORD_AUDIO" />
             <uses-permission android:name="android.permission.RECORD_VIDEO"/>
-            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
         </config-file>
 
         <source-file src="src/android/BBDCapture.java" target-dir="src/com/blackberry/bbd/cordova/plugins/mediacapture" />

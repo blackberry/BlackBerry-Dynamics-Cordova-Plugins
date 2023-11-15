@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
+ Copyright (c) 2023 BlackBerry Limited. All Rights Reserved.
  Some modifications to the original Cordova Media Capture plugin
  from https://github.com/apache/cordova-plugin-media-capture/
 
@@ -810,6 +810,8 @@
         }
     }
 
+    [self.avSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+
     NSString* docsPath = [NSTemporaryDirectory()stringByStandardizingPath];   // use file system temporary directory
     NSError* err = nil;
     GDFileManager* fileMgr = [[GDFileManager alloc] init];
@@ -869,7 +871,6 @@
         __weak CDVAudioRecorderViewControllerBD* weakSelf = self;
 
         void (^startRecording)(void) = ^{
-            [weakSelf.avSession setCategory:AVAudioSessionCategoryRecord error:&error];
             [weakSelf.avSession setActive:YES error:&error];
             if (error) {
                 // can't continue without active audio session
