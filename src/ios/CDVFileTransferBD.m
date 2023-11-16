@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2022 BlackBerry Limited. All Rights Reserved.
+ Copyright (c) 2023 BlackBerry Limited. All Rights Reserved.
  Some modifications to the original Cordova FileTransfer plugin
  from https://github.com/apache/cordova-plugin-file-transfer/
  
@@ -453,7 +453,17 @@ static CFIndex WriteDataToStream(NSData* data, CFWriteStreamRef stream)
         targetURL = [[self.commandDelegate getCommandInstance:@"BBDFile"] fileSystemURLforLocalPath:target].url;
 
     } else {
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_17_0 && defined(__IPHONE_17_0)
+        if (@available(iOS 17.0, *)) {
+            targetURL = [NSURL URLWithString:target encodingInvalidCharacters:NO];
+        } else {
+            // Fallback on earlier versions
+            targetURL = [NSURL URLWithString:target];
+        }
+#else
         targetURL = [NSURL URLWithString:target];
+#endif
 
         if (targetURL == nil) {
             NSString* targetUrlTextEscaped = [target stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
