@@ -20,6 +20,7 @@ import {
     registerGDStateChangeHandler,
     notificationCenter,
     requireHelperPhrase,
+    capacitorPodsHelperPhrase,
     postInstallPhrase,
     assertDeploymentTargetReplacePhrase,
     headers,
@@ -144,7 +145,11 @@ export const addAssertDeploymentTarget = (capacitorPodFile) => {
     }
 
     if (!podFileContent.includes(requireHelperPhrase) && !podFileContent.includes(postInstallPhrase)) {
-        podFileContent = requireHelperPhrase + podFileContent + postInstallPhrase;
+        podFileContent = podFileContent + postInstallPhrase;
+        podFileContent = podFileContent.replace(
+            capacitorPodsHelperPhrase,
+            `${capacitorPodsHelperPhrase}\n${requireHelperPhrase}`
+        );
         fs.writeFileSync(capacitorPodFile, podFileContent, 'utf-8');
     }
 }

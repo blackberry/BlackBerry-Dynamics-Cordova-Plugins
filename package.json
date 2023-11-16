@@ -2,7 +2,7 @@
   "name": "capacitor-plugin-bbd-base",
   "type": "module",
   "version": "1.1.0",
-  "dynamicsPodSpec": "https://software.download.blackberry.com/repository/framework/dynamics/ios/11.1.0.62/BlackBerryDynamics-11.1.0.62.podspec",
+  "dynamicsPodSpec": "https://software.download.blackberry.com/repository/framework/dynamics/ios/12.0.1.79/BlackBerryDynamics-12.0.1.79.podspec",
   "description": "BlackBerry Dynamics Capacitor Base plugin.",
   "license": "SEE LICENSE IN LICENSE",
   "homepage": "https://community.blackberry.com",

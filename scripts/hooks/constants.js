@@ -33,6 +33,7 @@ const notificationCenter = `NotificationCenter.default.addObserver(self, selecto
 const requireHelperPhrase = "require_relative '../../node_modules/" +
     "capacitor-plugin-bbd-base/scripts/hooks/ios/update_deployment_target.rb'" +
     "\n";
+const capacitorPodsHelperPhrase = `require_relative '../../node_modules/@capacitor/ios/scripts/pods_helpers'`;
 const targetVersion = '15.0';
 const postInstallPhrase = [
     `post_install do |installer|`,
@@ -261,6 +262,7 @@ export {
     registerGDStateChangeHandler,
     notificationCenter,
     requireHelperPhrase,
+    capacitorPodsHelperPhrase,
     postInstallPhrase,
     assertDeploymentTargetReplacePhrase,
     headers,

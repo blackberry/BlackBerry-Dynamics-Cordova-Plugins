@@ -15,7 +15,7 @@ All the other BlackBerry Dynamics Cordova plugins require the Capacitor Base plu
 - We recommend to use the latest stable version of Node.js 18.x (LTS).
 
 #### Ionic
-- Ionic 6
+- Ionic 6, 7
 - `--type=ionic-angular`
 - `--type=ionic-react`
 - `--type=ionic-vue`
@@ -25,10 +25,12 @@ All the other BlackBerry Dynamics Cordova plugins require the Capacitor Base plu
 BlackBerry Dynamics SDK for iOS
  - BlackBerry Dynamics SDK for iOS v11.1, check environment requirements [here](https://docs.blackberry.com/en/development-tools/blackberry-dynamics-sdk-ios/11_1).
  - BlackBerry Dynamics SDK for iOS v11.2, check environment requirements [here](https://docs.blackberry.com/en/development-tools/blackberry-dynamics-sdk-ios/11_2).
+ - BlackBerry Dynamics SDK for iOS v12.0, check environment requirements [here](https://docs.blackberry.com/en/development-tools/blackberry-dynamics-sdk-ios/12_0).
 
-BlackBerry Dynamics SDK for Android
+BlackBerry Dynamics SDK for Android:
  - BlackBerry Dynamics SDK for Android v11.1, check environment requirements [here](https://docs.blackberry.com/en/development-tools/blackberry-dynamics-sdk-android/11_1).
  - BlackBerry Dynamics SDK for Android v11.2, check environment requirements [here](https://docs.blackberry.com/en/development-tools/blackberry-dynamics-sdk-android/11_2).
+ - BlackBerry Dynamics SDK for Android v12.0, check environment requirements [here](https://docs.blackberry.com/en/development-tools/blackberry-dynamics-sdk-android/12_0).
 
 ## Preconditions
 
@@ -42,15 +44,15 @@ Dynamics SDK for iOS and Android are installed as part of the `capacitor-plugin-
 ### BlackBerry Dynamics SDK for iOS integration
 The integration uses the iOS "Dynamic Framework" version of BlackBerry Dynamics as the static library is no longer supported.
 There are a few options to integrate BlackBerry Dynamics SDK for iOS.
-#### Using default (11.1) released version - default
-By default, `cordova-plugin-bbd-base` plugin will integrate **11.1** (11.1.0.62) version BlackBerry Dynamics SDK for iOS using following podspec: `https://software.download.blackberry.com/repository/framework/dynamics/ios/11.1.0.62/BlackBerryDynamics-11.1.0.62.podspec`.
+#### Using default (12.0) released version - default
+By default, `capacitor-plugin-bbd-base` plugin will integrate **12.0** (12.0.1.79) version BlackBerry Dynamics SDK for iOS using following podspec: `https://software.download.blackberry.com/repository/framework/dynamics/ios/12.0.1.79/BlackBerryDynamics-12.0.1.79.podspec`.
 > NOTE: If one of the below integration methods was used there is an option to reset **default** configuration by running following command:  
 `$ npx set-dynamics-podspec --default`  
 `$ ionic cap build ios`
 
 #### Using other released version
 There is possibility to integrate other released build of BlackBerry Dynamics SDK for iOS.  
-Currently, the **latest** supported versions is 11.2.  
+Currently, the **other** supported versions are 11.1 and 11.2.  
 Following command should be run to use BlackBerry Dynamics SDK for iOS v11.2:
 ```
 $ npx set-dynamics-podspec --url "https://software.download.blackberry.com/repository/framework/dynamics/ios/11.2.0.26/BlackBerryDynamics-11.2.0.26.podspec"
@@ -64,10 +66,10 @@ $ npx set-dynamics-podspec --path "/Users/<user>/Downloads/gdsdk-release-dylib-X
 $ ionic cap build ios
 ```
 ### BlackBerry Dynamics SDK for Android integration
-By default, `capacitor-plugin-bbd-base` plugin will integrate **11.1** (11.1.0.62) version of BlackBerry Dynamics SDK for Android.
+By default, `capacitor-plugin-bbd-base` plugin will integrate **12.0** (12.0.1.79) version of BlackBerry Dynamics SDK for Android.
 #### Using other released version
 There is possibility to integrate other released build of BlackBerry Dynamics SDK for Android.  
-Currently, the **latest** supported versions is 11.2.  
+Currently, the **other** supported versions are 11.1 and 11.2.  
 Following steps should be done to use BlackBerry Dynamics SDK for Android v11.2:
 - download `capacitor-plugin-bbd-base` from Github as ZIP
 - unzip downloaded "BlackBerry-Dynamics-Cordova-Plugins-capacitor-base.zip" and move it to `<path>/BlackBerry_Dynamics_SDK_for_Cordova_vX.X.X.X/plugins/`
