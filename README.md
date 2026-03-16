@@ -1,4 +1,8 @@
 # BlackBerry-Dynamics-Cordova-Plugins
+
+This repository is now archived.
+The latest BlackBerry Dynamics Cordova Plugins are now available to all clients and partners via https://www.blackberry.com/en/secure-communications/support/developers/blackberry-dynamics-sdk by clicking on the Cordova tab and then Download Dynamics SDK for Cordova.
+
 This repository contains following Cordova plugins separated into branches:
  - `capacitor-base` branch corresponds to [capacitor-plugin-bbd-base](https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/capacitor-base) plugin
   - `file` branch corresponds to [cordova-plugin-bbd-file](https://github.com/blackberry/BlackBerry-Dynamics-Cordova-Plugins/tree/file) plugin
